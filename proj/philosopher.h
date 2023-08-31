@@ -6,7 +6,7 @@
 /*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2023/08/31 01:35:31 by math42           ###   ########.fr       */
+/*   Updated: 2023/08/31 21:29:43 by math42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,8 @@ int		think(void*philo);
 int		eat(void *philo);
 int		psleep(void *philo);
 int		die(void *philo);
+//UTILS
+int	try_lock(t_philo *philo);
+int	try_unlock(t_philo *philo);
 
 #endif

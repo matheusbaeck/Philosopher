@@ -6,7 +6,7 @@
 /*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:42:37 by math42            #+#    #+#             */
-/*   Updated: 2023/08/31 02:37:33 by math42           ###   ########.fr       */
+/*   Updated: 2023/08/31 21:51:39 by math42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	get_time(t_philo *philo)
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	philo->time = tv.tv_usec;
+	philo->time = tv.tv_sec;
 	return (0);
 }
 
@@ -36,7 +36,17 @@ int	set_forks(t_data *dt)
 	i = -1;
 	while (++i < dt->n_philo)
 	{
+		if (!pthread_mutex_init(&dt->fork[i], NULL))
+			printf("fork %d init at %p\n", i, &dt->fork[i]);
+		else
+			printf("fork %d fail at %p\n", i, &dt->fork[i]);
+	}
+	i = -1;
+	while (++ i < dt->n_philo)
+	{
 		dt->philo[i].fork[0] = dt->fork[((i + dt->n_philo - 1) % dt->n_philo)];
+		dt->philo[i].fork[0] = dt->fork[((i + dt->n_philo + 1) % dt->n_philo)];
+		printf("%d takes fork %d and %d\n", i, (i + dt->n_philo - 1) % dt->n_philo, (i + dt->n_philo + 1) % dt->n_philo);
 	}
 	return (0);
 }
@@ -44,7 +54,6 @@ int	set_forks(t_data *dt)
 void	*philo_loop(void *philo)
 {
 	t_philo	*ph;
-	int		i;
 
 	ph = ((t_philo *)philo);
 	get_time(ph);
@@ -54,19 +63,13 @@ void	*philo_loop(void *philo)
 			think(ph);
 		else if (ph->last_act == think)
 		{
-			i = 1;
-			while (i != 0)
-			{
-				i = eat(ph);
-				if (i == 1)
-					usleep(ph->time_to_eat);
-				else
-					return (printf("%d died\n, ", ph->name), NULL);
-			}
+			if (eat(ph) == -1)
+				return(printf("%d died trying to eat\n", ph->name), NULL);
 		}
 		else if (ph->last_act == eat)
 			psleep(ph);
+		get_time(ph);
 	}
-	printf("EXIT\n");
+	printf("EXIT %d\n", ph->name);
 	return (NULL);
 }

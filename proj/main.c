@@ -6,7 +6,7 @@
 /*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2023/08/31 02:32:11 by math42           ###   ########.fr       */
+/*   Updated: 2023/08/31 18:16:42 by math42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	init(int argc, char **argv, t_data *dt)
 int	main(int argc, char **argv)
 {
 	t_data		dt;
-	void		*status;
 	int			i;
 
 	if (argc < 5)
@@ -55,9 +54,7 @@ int	main(int argc, char **argv)
 	i = -1;
 	while (++i < dt.n_philo)
 	{
-		pthread_join(dt.routine[i], &status);
-		if (*((int *)status) == -1)
-			return(perror("died"), -1);
+		pthread_join(dt.routine[i], NULL);
 	}
 	return (0);
 }
