@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:42:37 by math42            #+#    #+#             */
-/*   Updated: 2023/09/11 22:24:07 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2023/09/12 00:22:22 by math42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ int	set_forks(t_data *dt)
 	i = -1;
 	while (++ i < dt->n_philo)
 	{
-		dt->philo[i].fork[0] = dt->fork[((i + dt->n_philo - 1) % dt->n_philo)];
+		if (dt->n_philo == 2)
+			dt->philo[i].fork[0] = dt->fork[i];
+		else
+			dt->philo[i].fork[0] = dt->fork[((i + dt->n_philo - 1) % dt->n_philo)];
 		dt->philo[i].fork[1] = dt->fork[((i + dt->n_philo + 1) % dt->n_philo)];
-		printf("%d takes fork %d and %d\n", i, (i + dt->n_philo - 1) % dt->n_philo, (i + dt->n_philo + 1) % dt->n_philo);
 	}
 	return (0);
 }

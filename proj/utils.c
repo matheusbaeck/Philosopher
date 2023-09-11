@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:12:41 by math42            #+#    #+#             */
-/*   Updated: 2023/09/11 22:53:39 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2023/09/12 01:43:44 by math42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,22 +76,21 @@ int	try_unlock(t_philo *philo)
 int	pwait(int mseconds)
 {
 	struct timeval	tv;
-	long int		t;
+	long int		start_time;
+	long int		delta_time;
 
+	mseconds *= 1000;
 	gettimeofday(&tv, NULL);
-
-	i = -1;
-	while(++i < mseconds)
-		usleep(1000);
-	// sleep(seconds);
-	return (0);
-}
-
-int	get_time(t_philo *philo)
-{
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	philo->time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	start_time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	delta_time = ((tv.tv_sec * 1000 + tv.tv_usec / 1000) - start_time);
+	while (delta_time < mseconds)
+	{
+		if ((mseconds - delta_time) / 999999 > 0)
+			usleep(999999);
+		else
+			return (usleep((mseconds - delta_time) % 999999));
+		gettimeofday(&tv, NULL);
+		delta_time = ((tv.tv_sec * 1000 + tv.tv_usec / 1000) - start_time);
+	}
 	return (0);
 }
