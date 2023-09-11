@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:42:37 by math42            #+#    #+#             */
-/*   Updated: 2023/08/31 21:51:39 by math42           ###   ########.fr       */
+/*   Updated: 2023/09/11 22:24:07 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	get_time(t_philo *philo)
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	philo->time = tv.tv_sec;
+	philo->time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	return (0);
 }
 
@@ -45,7 +45,7 @@ int	set_forks(t_data *dt)
 	while (++ i < dt->n_philo)
 	{
 		dt->philo[i].fork[0] = dt->fork[((i + dt->n_philo - 1) % dt->n_philo)];
-		dt->philo[i].fork[0] = dt->fork[((i + dt->n_philo + 1) % dt->n_philo)];
+		dt->philo[i].fork[1] = dt->fork[((i + dt->n_philo + 1) % dt->n_philo)];
 		printf("%d takes fork %d and %d\n", i, (i + dt->n_philo - 1) % dt->n_philo, (i + dt->n_philo + 1) % dt->n_philo);
 	}
 	return (0);

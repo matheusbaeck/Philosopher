@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2023/08/31 21:29:43 by math42           ###   ########.fr       */
+/*   Updated: 2023/09/11 22:47:45 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ int		die(void *philo);
 //UTILS
 int	try_lock(t_philo *philo);
 int	try_unlock(t_philo *philo);
+int	pwait(int mseconds);
 
 #endif
