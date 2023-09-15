@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2023/09/11 22:47:45 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2023/09/13 12:57:59 by math42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@
 #include <sys/time.h>
 
 #define MAX_PHILO 10
+#define	T_LOCK 50;
+#define T_UNLOCK 10;
 
 typedef struct s_philo
 {
-	pthread_mutex_t	fork[2];
+	pthread_mutex_t	*fork[2];
 	long int		born_time;
 	long int		time_to_die;
 	long int		time_to_eat;
@@ -34,6 +36,7 @@ typedef struct s_philo
 	int				name;
 	long int		time;
 	long int		last_meal;
+	int				div;
 }	t_philo;
 
 typedef struct s_data

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:45:26 by math42            #+#    #+#             */
-/*   Updated: 2023/09/11 22:44:00 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2023/09/13 12:11:45 by math42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,11 @@ int	eat(void *philo)
 	ph->last_meal = ph->time;
 	printf("%ld %d is eating\n", ph->time - ph->born_time, ph->name + 1);
 	pwait(ph->time_to_eat);
-	try_unlock(ph);
+	pthread_mutex_unlock(ph->fork[0]);
+	get_time(ph);
+	printf("%ld %d droped fork %d\n", ph->time - ph->born_time, ph->name + 1, ph->name);
+	pthread_mutex_unlock(ph->fork[1]);
+	printf("%ld %d droped fork %d\n", ph->time - ph->born_time, ph->name + 1, ph->name + 2);
 	return (0);
 }
 

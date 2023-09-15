@@ -6,7 +6,7 @@
 #    By: math42 <math42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/30 15:06:36 by math42            #+#    #+#              #
-#    Updated: 2023/09/12 00:08:34 by math42           ###   ########.fr        #
+#    Updated: 2023/09/15 14:17:07 by math42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,6 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-	@make clean
 
 clean:
 	@rm -f $(OBJS)
@@ -35,4 +34,5 @@ fclean: clean
 re: fclean all
 
 test: re
-	./philo 3 1500 400 400
+	./philo 3 1000 200 200
+	

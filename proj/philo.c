@@ -6,7 +6,7 @@
 /*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:42:37 by math42            #+#    #+#             */
-/*   Updated: 2023/09/12 00:22:22 by math42           ###   ########.fr       */
+/*   Updated: 2023/09/12 23:53:58 by math42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,14 @@ int	set_forks(t_data *dt)
 	i = -1;
 	while (++i < dt->n_philo)
 	{
-		if (!pthread_mutex_init(&dt->fork[i], NULL))
-			printf("fork %d init at %p\n", i, &dt->fork[i]);
-		else
+		if (pthread_mutex_init(&dt->fork[i], NULL))
 			printf("fork %d fail at %p\n", i, &dt->fork[i]);
 	}
 	i = -1;
 	while (++ i < dt->n_philo)
 	{
-		if (dt->n_philo == 2)
-			dt->philo[i].fork[0] = dt->fork[i];
-		else
-			dt->philo[i].fork[0] = dt->fork[((i + dt->n_philo - 1) % dt->n_philo)];
-		dt->philo[i].fork[1] = dt->fork[((i + dt->n_philo + 1) % dt->n_philo)];
+		dt->philo[i].fork[0] = &dt->fork[((i + dt->n_philo - 1) % dt->n_philo)];
+		dt->philo[i].fork[1] = &dt->fork[((i + dt->n_philo + 1) % dt->n_philo)];
 	}
 	return (0);
 }
