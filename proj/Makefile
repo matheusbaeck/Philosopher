@@ -3,36 +3,44 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: math42 <math42@student.42.fr>              +#+  +:+       +#+         #
+#    By: baeck <baeck@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/30 15:06:36 by math42            #+#    #+#              #
-#    Updated: 2023/09/15 14:17:07 by math42           ###   ########.fr        #
+#    Updated: 2023/11/12 17:28:48 by baeck            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philo
-
-CC = clang
-
-SRCS =  main.c philo.c actions.c utils.c
-
-OBJS = ${SRCS:.c=.o}
-
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=thread
+
+SRC_DIR = src
+OBJ_DIR = .obj
+
+SRCS = $(wildcard $(SRC_DIR)/*.c)
+OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
+
+NAME = philo
 
 all: $(NAME)
 
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) -o $@ $^
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@rm -f $(OBJS)
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@rm -f $(NAME)
+	rm -rf $(NAME)
 
 re: fclean all
 
 test: re
-	./philo 3 1000 200 200
+	./philo 3 1000 200 200s
 	
+.PHONY: all clean fclean re test
