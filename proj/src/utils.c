@@ -6,7 +6,7 @@
 /*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:12:41 by math42            #+#    #+#             */
-/*   Updated: 2023/09/13 13:47:54 by math42           ###   ########.fr       */
+/*   Updated: 2023/09/20 17:33:00 by math42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,43 @@
 // 	philo->time_loop = philo->time % (philo->time_to_die % 3);
 // }
 
-int	try_lock(t_philo *philo)
+void	*try_lock_sucess(void *param)
+{
+	printf("trying\n");
+	pthread_join(pthread_mutex_lock((pthread_mutex_t *) param), &param);
+	return (param);
+}
+
+void	*try_lock_fail(void *param)
+{
+	usleep(100);
+	*((int *) param) = 1;
+	return (param);
+}
+
+int	try_lock(pthread_mutex_t *mutex)
+{
+	pthread_t	thread[2];
+	int			*retval;
+
+	pthread_create(&thread[0], NULL, try_lock_sucess, mutex);
+	pthread_create(&thread[1], NULL, try_lock_fail, NULL);
+	pthread_join(-1 , (void **) &retval);
+	return (*retval);
+}
+
+int	lock_fork(t_philo *philo)
 {
 	int	e;
 	int	time_loop;
 	int	turn_size;
 	int margin = 10;
 
-	turn_size = philo->time_to_die / philo->div;
+	turn_size = philo->time_to_die / 3;
 	while (!get_time(philo) && (philo->time - philo->last_meal) < philo->time_to_die)
 	{
 		time_loop = philo->time % philo->time_to_die;
-		if (time_loop / turn_size == philo->name % philo->div
+		if (time_loop / turn_size == philo->name % 3
 			&& time_loop % turn_size < margin)
 		{
 			get_time(philo);

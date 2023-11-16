@@ -6,7 +6,7 @@
 /*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2023/09/13 12:57:16 by math42           ###   ########.fr       */
+/*   Updated: 2023/11/16 14:41:23 by math42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,47 +15,51 @@
 int	init(int argc, char **argv, t_data *dt)
 {
 	int			i;
-	int 		divisor;
-	long long	black_hole;
+	int			n_philo;
 
-	dt->n_philo = atoi(argv[1]);
-	dt->time_to_die = atoi(argv[2]);
-	dt->time_to_eat = atoi(argv[3]);
-	dt->time_to_sleep = atoi(argv[4]);
-	divisor = 2;
-	if (dt->n_philo % 2 == 1)
-		divisor = 3;
+	n_philo = atoi(argv[1]);
+	//mutexes & threads & philos MALLOCS
+	dt->fork = (pthread_mutex_t *) malloc(n_philo * sizeof(pthread_mutex_t));
+	dt->routine = (pthread_t *) malloc(n_philo + 1 * sizeof(pthread_t));
+	dt->philo = (t_philo *) malloc(n_philo * sizeof(t_philo));
+	dt->controller = (t_controller *) malloc(n_philo * sizeof(t_controller));
+	//trafic control
+	controller_init(dt->controller, n_philo);
 	i = -1;
-	while (++i < dt->n_philo)
+	while (++i < n_philo)
 	{
-		black_hole = -1;
+		dt->controller->turn[i] = 0; // std red
+		dt->controller->traffic_control[i] = 0; //std red
 		if (argc >= 6)
-			black_hole = atoi(argv[i]);
+			*dt->controller->notepme = atoi(argv[i]);
 		philo_init(&dt->philo[i],
-			(t_philo){{0, 0},
-			0, dt->time_to_die, dt->time_to_eat, dt->time_to_sleep,
-			(void *) NULL, black_hole, i, 0, 0, divisor});
+			(t_philo){{
+			&dt->fork[((i + n_philo) % n_philo)],
+			&dt->fork[((i + n_philo + 1) % n_philo)]},
+			0, 0, 0, atoi(argv[2]), atoi(argv[3]), atoi(argv[4]),
+			(void *) NULL, i, &dt->controller->turn[i],
+			&dt->controller->traffic_control[i]});
 	}
 	return (0);
 }
 
 int	main(int argc, char **argv)
 {
-	t_data		dt;
-	int			i;
+	t_data			dt;
+	int				i;
 
 	if (argc < 5)
 		return (perror("few args"), 1);
-	if (init(argc, argv, &dt) != 0)
+	if (init(argc, argv, &dt))
 		return (perror("init fail"), 1);
-	set_forks(&dt);
 	i = -1;
-	while (++i < dt.n_philo)
+	while (++i < dt.controller->n_philo)
 	{
 		pthread_create(&dt.routine[i], NULL, philo_loop, &dt.philo[i]);
 	}
+	pthread_create(&dt.routine[i], NULL, controller_loop, &dt.controller);
 	i = -1;
-	while (++i < dt.n_philo)
+	while (++i < dt.controller->n_philo)
 	{
 		pthread_join(dt.routine[i], NULL);
 	}
