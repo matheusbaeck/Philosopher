@@ -6,7 +6,7 @@
 /*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2023/11/16 15:00:26 by math42           ###   ########.fr       */
+/*   Updated: 2023/11/21 18:45:15 by math42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@
 
 enum e_status
 {
-	THK = 42,
-	EAT = 1,
+	NOT_INIT = 2,
+	EAT = 42,
+	THK = 1,
 	SLP = 0,
 	DEAD = -1,
 	GREEN = 1,
@@ -43,17 +44,16 @@ typedef struct s_philo
 	long int		time_to_die;
 	long int		time_to_eat;
 	long int		time_to_sleep;
-	int				(*last_act)(void *param);
 	int				name;
-	int				*turn;
-	int				*status; //-1 dead, 0 no forks, 42 2 forks
+	int				*turn; //read
+	int				*status; //write
 }	t_philo;
 
 typedef struct s_controller
 {
 	int				n_philo;
 	int				*notepme;
-	int				*traffic_control;
+	int				*philo_status;
 	int				*turn;
 	int				n_groups;
 }	t_controller;
@@ -61,14 +61,18 @@ typedef struct s_controller
 typedef struct s_data
 {
 	pthread_mutex_t	*fork;
-	pthread_t		*routine;
+	pthread_t		*thread;
 	t_philo			*philo;
 	t_controller	*controller;
 }	t_data;
 
 
-//PHILO
+
+//INIT
 void	philo_init(t_philo *philo, t_philo param);
+void	controller_init(t_controller *controller, int n_philo);
+int		init(int argc, char **argv, t_data *dt);
+//PHILO
 int		get_time(t_philo *philo);
 int		set_forks(t_data *dt, int n_philo);
 void	*philo_loop(void *philo);
@@ -83,7 +87,7 @@ int		psleep(void *philo);
 int		die(void *philo);
 //UTILS
 int		lock_fork(t_philo *philo);
-int		try_lock(pthread_mutex_t *mutex);
+int		ft_try_lock(pthread_mutex_t *mutex, int wait_time);
 void	*try_lock_fail(void *param);
 void	*try_lock_sucess(void *param);
 int		try_unlock(t_philo *philo);
