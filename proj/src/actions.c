@@ -6,7 +6,7 @@
 /*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 14:57:11 by math42            #+#    #+#             */
-/*   Updated: 2023/11/21 22:09:58 by math42           ###   ########.fr       */
+/*   Updated: 2023/11/21 23:36:57 by math42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,16 @@ int	eat(void *philo)
 
 	ph = ((t_philo *)philo);
 	while (*(ph->turn) == RED)
-		usleep(1);
+	{
+		get_time(ph);
+		if ((ph->time - ph->last_meal) > ph->time_to_die)
+			return (-1);
+	}
 	*(ph->status) = EAT;
-	if (lock_fork(ph) == -1)
+	if (lock_fork(ph) != 0)
 		return (-1);
 	get_time(ph);
-	if ((ph->last_meal - ph->time) > ph->time_to_eat)
+	if ((ph->time - ph->last_meal) > ph->time_to_die)
 		return (-1);
 	ph->last_meal = ph->time;
 	printf("%ld %d is eating\n", ph->time - ph->born_time, ph->name + 1);
@@ -44,7 +48,6 @@ int	eat(void *philo)
 	get_time(ph);
 	printf("%ld %d drop fork %d\n", ph->time - ph->born_time, ph->name + 1, ph->name + 1);
 	printf("%ld %d drop fork %d\n", ph->time - ph->born_time, ph->name + 1, ph->name + 2);
-	*(ph->status) = 1;
 	return (0);
 }
 
@@ -54,19 +57,29 @@ int	psleep(void *philo)
 
 	ph = ((t_philo *)philo);
 	get_time(ph);
-	*(ph->status) = SLP;
+	if ((ph->time - ph->last_meal) >= ph->time_to_die)
+		die(ph);
 	printf("%lu %d is sleeping\n", ph->time - ph->born_time, ph->name + 1);
-	pwait(ph->time_to_sleep);
+	*(ph->status) = SLP;
+	if ((ph->time - ph->last_meal + ph->time_to_sleep) >= ph->time_to_die)
+	{
+		pwait(ph->time_to_die - (ph->time - ph->last_meal));
+		die(ph);
+	}
+	else
+		pwait(ph->time_to_sleep);
 	return (0);
 }
 
 int	die(void *philo)
 {
 	t_philo	*ph;
+	int		last_status;
 
 	ph = ((t_philo *)philo);
 	get_time(ph);
+	last_status = *(ph->status);
 	*(ph->status) = DEAD;
 	printf("%lu %d is dead\n", ph->time - ph->born_time, ph->name + 1);
-	return (0);
+	return (last_status);
 }

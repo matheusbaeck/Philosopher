@@ -6,7 +6,7 @@
 #    By: math42 <math42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/30 15:06:36 by math42            #+#    #+#              #
-#    Updated: 2023/11/21 22:13:44 by math42           ###   ########.fr        #
+#    Updated: 2023/11/21 23:37:20 by math42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,6 @@ fclean: clean
 re: fclean all
 
 test: re
-	./philo 3 3000 1000 1000
+	./philo 3 800 200 20000
 	
 .PHONY: all clean fclean re test
