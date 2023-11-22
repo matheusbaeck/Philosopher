@@ -6,7 +6,7 @@
 /*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2023/11/21 18:45:15 by math42           ###   ########.fr       */
+/*   Updated: 2023/11/22 05:19:18 by math42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@
 enum e_status
 {
 	NOT_INIT = 2,
-	EAT = 42,
 	THK = 1,
+	EAT = 42,
 	SLP = 0,
 	DEAD = -1,
+	KILD = -2,
+	EATALL = 420,
 	GREEN = 1,
 	RED = 0
 };
@@ -56,6 +58,7 @@ typedef struct s_controller
 	int				*philo_status;
 	int				*turn;
 	int				n_groups;
+	pthread_t		*thread;
 }	t_controller;
 
 typedef struct s_data
@@ -70,14 +73,13 @@ typedef struct s_data
 
 //INIT
 void	philo_init(t_philo *philo, t_philo param);
-void	controller_init(t_controller *controller, int n_philo);
+void	controller_init(int argc, char **argv, t_controller *controller, int n_philo);
 int		init(int argc, char **argv, t_data *dt);
 //PHILO
 int		get_time(t_philo *philo);
 int		set_forks(t_data *dt, int n_philo);
 void	*philo_loop(void *philo);
 //CONTROLLER
-void	controller_init(t_controller *controller, int n_philo);
 void	set_group_turn(t_controller *controller, int j);
 void	*controller_loop(void *controller);
 //ACTIONS

@@ -6,7 +6,7 @@
 /*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 14:15:30 by math42            #+#    #+#             */
-/*   Updated: 2023/11/21 22:20:03 by math42           ###   ########.fr       */
+/*   Updated: 2023/11/22 04:54:24 by math42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,24 @@ void	set_lights_green(t_controller *con, int j)
 	int	i;
 
 	i = -1;
-	while (++i < (con->n_philo))
+	if (con->notepme)
 	{
-		if (i % con->n_groups == j)
-			con->turn[i] = GREEN;
+		while (++i < (con->n_philo))
+		{
+			if (i % con->n_groups == j && con->notepme[i] > 0)
+			{
+				con->turn[i] = GREEN;
+				--con->notepme[i];
+			}
+		}
+	}
+	else
+	{
+		while (++i < (con->n_philo))
+		{
+			if (i % con->n_groups == j)
+				con->turn[i] = GREEN;
+		}
 	}
 }
 
@@ -63,7 +77,7 @@ void	wait_start_eating(t_controller *con, int j)
 	i = -1;
 	while (++i < (con->n_philo))
 	{
-		if (i % con->n_groups == j)
+		if (i % con->n_groups == j && con->turn[i] == GREEN)
 		{
 			if (con->philo_status[i] == EAT)
 				con->turn[i] = RED;
@@ -87,6 +101,19 @@ void	wait_end_eating(t_controller *con, int j)
 	}
 }
 
+int	check_notepme(t_controller *con)
+{
+	int	i;
+
+	i = -1;
+	while (++i < (con->n_philo))
+	{
+		if (con->notepme[i] > 0)
+			return (0);
+	}
+	return (1);
+}
+
 void	*controller_loop(void *controller)
 {
 	int				j;
@@ -101,6 +128,12 @@ void	*controller_loop(void *controller)
 		set_lights_green(con, j);
 		wait_start_eating(con, j);
 		wait_end_eating(con, j);
+		printf("no print == no work, is C broken?\n");
+		if (con->notepme && check_notepme(con))
+		{
+			printf("fuck!! pasta bus error :3");
+			break ;
+		}
 	}
 	return (0);
 }
