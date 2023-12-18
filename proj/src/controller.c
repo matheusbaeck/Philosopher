@@ -6,7 +6,7 @@
 /*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 14:15:30 by math42            #+#    #+#             */
-/*   Updated: 2023/11/22 04:54:24 by math42           ###   ########.fr       */
+/*   Updated: 2023/11/22 15:28:33 by math42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,24 +49,17 @@ void	set_lights_green(t_controller *con, int j)
 	int	i;
 
 	i = -1;
-	if (con->notepme)
+	while (++i < (con->n_philo))
 	{
-		while (++i < (con->n_philo))
+		if (con->philo_status == DEAD)
+			kill_them_all(con->thread, i);
+		if (con->notepme && i % con->n_groups == j && con->notepme[i] > 0)
 		{
-			if (i % con->n_groups == j && con->notepme[i] > 0)
-			{
-				con->turn[i] = GREEN;
-				--con->notepme[i];
-			}
+			con->turn[i] = GREEN;
+			--con->notepme[i];
 		}
-	}
-	else
-	{
-		while (++i < (con->n_philo))
-		{
-			if (i % con->n_groups == j)
-				con->turn[i] = GREEN;
-		}
+		else if (i % con->n_groups == j)
+			con->turn[i] = GREEN;	
 	}
 }
 

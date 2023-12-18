@@ -6,7 +6,7 @@
 /*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2023/11/22 05:19:18 by math42           ###   ########.fr       */
+/*   Updated: 2023/11/22 15:36:07 by math42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,11 @@ typedef struct s_data
 
 //INIT
 void	philo_init(t_philo *philo, t_philo param);
-void	controller_init(int argc, char **argv, t_controller *controller, int n_philo);
+void	controller_init(int argc, char **argv,
+	t_controller *controller, int n_philo);
 int		init(int argc, char **argv, t_data *dt);
 //PHILO
-int		get_time(t_philo *philo);
+int		update_time(t_philo *philo);
 int		set_forks(t_data *dt, int n_philo);
 void	*philo_loop(void *philo);
 //CONTROLLER

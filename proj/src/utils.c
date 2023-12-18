@@ -6,7 +6,7 @@
 /*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:12:41 by math42            #+#    #+#             */
-/*   Updated: 2023/11/21 23:04:38 by math42           ###   ########.fr       */
+/*   Updated: 2023/11/22 15:35:47 by math42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	lock_fork(t_philo *philo)
 {
 	int	e;
 
-	get_time(philo);
+	update_time(philo);
 	if ((philo->time - philo->last_meal) < philo->time_to_die)
 	{
 		e = pthread_mutex_lock(philo->fork[0]);
@@ -54,4 +54,18 @@ int	pwait(int mseconds)
 		delta_time = ((tv.tv_sec * 1000 + tv.tv_usec / 1000) - start_time);
 	}
 	return (0);
+}
+
+void	kill_them_all(pthread_t *thread, int size, int dead)
+{
+	int	i;
+
+	i = -1;
+	while (++i < size)
+	{
+		if (i == dead)
+			++i;
+		kill(thread[i]);
+	}
+	exit (0);
 }

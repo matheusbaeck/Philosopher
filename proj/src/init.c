@@ -6,7 +6,7 @@
 /*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:55:22 by math42            #+#    #+#             */
-/*   Updated: 2023/11/22 05:12:36 by math42           ###   ########.fr       */
+/*   Updated: 2023/11/22 15:35:47 by math42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@ void	philo_init(t_philo *philo, t_philo param)
 
 	pthread_mutex_init(philo->fork[0], NULL);
 	*(philo->status) = NOT_INIT;
-	get_time(philo);
+	update_time(philo);
 	philo->born_time = philo->time;
 	philo->last_meal = philo->time;
 }
 
-void	controller_init(int argc, char **argv, t_controller *controller, int n_philo)
+void	controller_init(int argc, char **argv,
+	t_controller *controller, int n_philo)
 {
 	int		i;
 

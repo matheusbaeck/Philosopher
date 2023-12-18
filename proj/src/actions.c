@@ -6,7 +6,7 @@
 /*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 14:57:11 by math42            #+#    #+#             */
-/*   Updated: 2023/11/21 23:36:57 by math42           ###   ########.fr       */
+/*   Updated: 2023/11/22 15:35:47 by math42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	think(void *philo)
 	t_philo	*ph;
 
 	ph = ((t_philo *)philo);
-	get_time(ph);
+	update_time(ph);
 	printf("%lu %d is thinking\n", ph->time - ph->born_time, ph->name + 1);
 	*(ph->status) = THK;
 	return (0);
@@ -30,14 +30,14 @@ int	eat(void *philo)
 	ph = ((t_philo *)philo);
 	while (*(ph->turn) == RED)
 	{
-		get_time(ph);
+		update_time(ph);
 		if ((ph->time - ph->last_meal) > ph->time_to_die)
 			return (-1);
 	}
 	*(ph->status) = EAT;
 	if (lock_fork(ph) != 0)
 		return (-1);
-	get_time(ph);
+	update_time(ph);
 	if ((ph->time - ph->last_meal) > ph->time_to_die)
 		return (-1);
 	ph->last_meal = ph->time;
@@ -45,7 +45,7 @@ int	eat(void *philo)
 	pwait(ph->time_to_eat);
 	pthread_mutex_unlock(ph->fork[0]);
 	pthread_mutex_unlock(ph->fork[1]);
-	get_time(ph);
+	update_time(ph);
 	printf("%ld %d drop fork %d\n", ph->time - ph->born_time, ph->name + 1, ph->name + 1);
 	printf("%ld %d drop fork %d\n", ph->time - ph->born_time, ph->name + 1, ph->name + 2);
 	return (0);
@@ -56,7 +56,7 @@ int	psleep(void *philo)
 	t_philo	*ph;
 
 	ph = ((t_philo *)philo);
-	get_time(ph);
+	update_time(ph);
 	if ((ph->time - ph->last_meal) >= ph->time_to_die)
 		die(ph);
 	printf("%lu %d is sleeping\n", ph->time - ph->born_time, ph->name + 1);
@@ -77,7 +77,7 @@ int	die(void *philo)
 	int		last_status;
 
 	ph = ((t_philo *)philo);
-	get_time(ph);
+	update_time(ph);
 	last_status = *(ph->status);
 	*(ph->status) = DEAD;
 	printf("%lu %d is dead\n", ph->time - ph->born_time, ph->name + 1);

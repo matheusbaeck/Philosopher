@@ -6,13 +6,13 @@
 /*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:42:37 by math42            #+#    #+#             */
-/*   Updated: 2023/11/21 23:22:49 by math42           ###   ########.fr       */
+/*   Updated: 2023/11/22 15:35:47 by math42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-int	get_time(t_philo *philo)
+int	update_time(t_philo *philo)
 {
 	struct timeval	tv;
 
@@ -45,7 +45,7 @@ void	*philo_loop(void *philo)
 	t_philo	*ph;
 
 	ph = ((t_philo *)philo);
-	get_time(ph);
+	update_time(ph);
 	while ((ph->time - ph->last_meal) < ph->time_to_die)
 	{
 		if (*(ph->status) == NOT_INIT || *(ph->status) == SLP)
@@ -57,7 +57,7 @@ void	*philo_loop(void *philo)
 		}
 		else if (*(ph->status) == EAT)
 			psleep(ph);
-		get_time(ph);
+		update_time(ph);
 	}
 	die(ph);
 	return (NULL);
