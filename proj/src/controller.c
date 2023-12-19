@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   controller.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: baeck <baeck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 14:15:30 by math42            #+#    #+#             */
-/*   Updated: 2023/11/22 15:28:33 by math42           ###   ########.fr       */
+/*   Updated: 2023/12/19 12:28:43 by baeck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,47 +51,64 @@ void	set_lights_green(t_controller *con, int j)
 	i = -1;
 	while (++i < (con->n_philo))
 	{
-		if (con->philo_status == DEAD)
-			kill_them_all(con->thread, i);
-		if (con->notepme && i % con->n_groups == j && con->notepme[i] > 0)
+		if (con->philo_status[i] == DEAD)
+			kill_them_all(con->thread, i, con->n_philo);
+		if (i % con->n_groups == j && con->turn[i] != BLUE)
 		{
-			con->turn[i] = GREEN;
-			--con->notepme[i];
+			if (con->notepme)
+			{
+				if (con->notepme[i] > 0)
+				{
+					con->turn[i] = GREEN;
+					--con->notepme[i];
+				}
+				else
+					con->turn[i] = BLUE;
+			}
+			else
+				con->turn[i] = GREEN;
 		}
-		else if (i % con->n_groups == j)
-			con->turn[i] = GREEN;	
 	}
 }
 
-void	wait_start_eating(t_controller *con, int j)
+int	wait_start_eating(t_controller *con, int j)
 {
 	int	i;
 
 	i = -1;
 	while (++i < (con->n_philo))
 	{
+		if (con->philo_status[i] == DEAD)
+			kill_them_all(con->thread, i, con->n_philo);
 		if (i % con->n_groups == j && con->turn[i] == GREEN)
 		{
 			if (con->philo_status[i] == EAT)
-				con->turn[i] = RED;
+				con->turn[i] = YELLOW;
 			else
-				i--;
+				return (1);
 		}
 	}
+	return (0);
 }
 
-void	wait_end_eating(t_controller *con, int j)
+int	wait_end_eating(t_controller *con, int j)
 {
 	int	i;
 
 	i = -1;
 	while (++i < (con->n_philo))
 	{
-		if (i % con->n_groups == j && con->philo_status[i] == EAT)
+		if (con->philo_status[i] == DEAD)
+			kill_them_all(con->thread, i, con->n_philo);
+		if (i % con->n_groups == j && con->turn[i] == YELLOW)
 		{
-			i--;
+			if (con->philo_status[i] == EAT)
+				return (1);
+			else
+				con->turn[i] = RED;
 		}
 	}
+	return (0);
 }
 
 int	check_notepme(t_controller *con)
@@ -101,6 +118,7 @@ int	check_notepme(t_controller *con)
 	i = -1;
 	while (++i < (con->n_philo))
 	{
+		//printf("checking %i %i\n", i, con->notepme[i]);
 		if (con->notepme[i] > 0)
 			return (0);
 	}
@@ -109,22 +127,21 @@ int	check_notepme(t_controller *con)
 
 void	*controller_loop(void *controller)
 {
-	int				j;
+	int				group_turn;
 	t_controller	*con;
 
 	con = (t_controller *) controller;
 	wait_philo_init(con);
-	j = -1;
-	while (++j >= 0)
+	group_turn = -1;
+	while (++group_turn >= 0)
 	{
-		j = j % con->n_groups;
-		set_lights_green(con, j);
-		wait_start_eating(con, j);
-		wait_end_eating(con, j);
-		printf("no print == no work, is C broken?\n");
+		group_turn = group_turn % con->n_groups;
+		set_lights_green(con, group_turn); //set some lights (GREEN || BLUE)
+		while (wait_start_eating(con, group_turn)); //wait till all GREEN lighted ph status are EAT, set light YELLOW
+		while (wait_end_eating(con, group_turn)); //wait till all YELLOW lighted ph status are not EAT, set light RED
 		if (con->notepme && check_notepme(con))
 		{
-			printf("fuck!! pasta bus error :3");
+			printf("Ohh!! bus pasta :3\n");
 			break ;
 		}
 	}

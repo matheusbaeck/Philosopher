@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: baeck <baeck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2023/11/22 15:36:07 by math42           ###   ########.fr       */
+/*   Updated: 2023/12/19 12:20:27 by baeck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <pthread.h>
 #include <stdlib.h> //atoi
 #include <sys/time.h>
+#include <signal.h> //kill
 
 #define MAX_PHILO 10
 #define	T_LOCK 50;
@@ -31,9 +32,14 @@ enum e_status
 	EAT = 42,
 	SLP = 0,
 	DEAD = -1,
-	KILD = -2,
-	EATALL = 420,
-	GREEN = 1,
+	FINISH_EATING = -2
+};
+
+enum e_turn
+{
+	BLUE = 420,
+	GREEN = 2,
+	YELLOW = 1,
 	RED = 0
 };
 
@@ -55,8 +61,8 @@ typedef struct s_controller
 {
 	int				n_philo;
 	int				*notepme;
-	int				*philo_status;
-	int				*turn;
+	int				*philo_status; //read
+	int				*turn; //write
 	int				n_groups;
 	pthread_t		*thread;
 }	t_controller;
@@ -95,5 +101,6 @@ void	*try_lock_fail(void *param);
 void	*try_lock_sucess(void *param);
 int		try_unlock(t_philo *philo);
 int		pwait(int mseconds);
+void	kill_them_all(pthread_t *thread, int size, int dead);
 
 #endif

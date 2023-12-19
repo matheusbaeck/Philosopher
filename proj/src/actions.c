@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: baeck <baeck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 14:57:11 by math42            #+#    #+#             */
-/*   Updated: 2023/11/22 15:35:47 by math42           ###   ########.fr       */
+/*   Updated: 2023/12/19 12:17:48 by baeck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	eat(void *philo)
 	t_philo	*ph;
 
 	ph = ((t_philo *)philo);
-	while (*(ph->turn) == RED)
+	while (*(ph->turn) != GREEN)
 	{
 		update_time(ph);
 		if ((ph->time - ph->last_meal) > ph->time_to_die)
@@ -77,6 +77,8 @@ int	die(void *philo)
 	int		last_status;
 
 	ph = ((t_philo *)philo);
+	while (*(ph->turn) == BLUE)
+		pwait(1000);
 	update_time(ph);
 	last_status = *(ph->status);
 	*(ph->status) = DEAD;

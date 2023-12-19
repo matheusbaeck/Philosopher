@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: baeck <baeck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:12:41 by math42            #+#    #+#             */
-/*   Updated: 2023/11/22 15:35:47 by math42           ###   ########.fr       */
+/*   Updated: 2023/12/18 15:29:03 by baeck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	kill_them_all(pthread_t *thread, int size, int dead)
 	{
 		if (i == dead)
 			++i;
-		kill(thread[i]);
+		kill(thread[i], 1);
 	}
 	exit (0);
 }
