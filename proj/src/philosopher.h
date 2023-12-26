@@ -6,7 +6,7 @@
 /*   By: baeck <baeck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2023/12/19 12:20:27 by baeck            ###   ########.fr       */
+/*   Updated: 2023/12/23 16:16:04 by baeck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ typedef struct s_philo
 	int				name;
 	int				*turn; //read
 	int				*status; //write
+	int				i_eat;
+	int				must_eat;
 }	t_philo;
 
 typedef struct s_controller
@@ -78,22 +80,21 @@ typedef struct s_data
 
 
 //INIT
-void	philo_init(t_philo *philo, t_philo param);
+void	philo_init(t_philo *philo, t_philo param, int *must_eat, int i);
 void	controller_init(int argc, char **argv,
 	t_controller *controller, int n_philo);
 int		init(int argc, char **argv, t_data *dt);
 //PHILO
 int		update_time(t_philo *philo);
-int		set_forks(t_data *dt, int n_philo);
 void	*philo_loop(void *philo);
 //CONTROLLER
 void	set_group_turn(t_controller *controller, int j);
 void	*controller_loop(void *controller);
 //ACTIONS
-int		think(void*philo);
-int		eat(void *philo);
-int		psleep(void *philo);
-int		die(void *philo);
+int		think(t_philo *philo);
+int		eat(t_philo *philo);
+int		psleep(t_philo *philo);
+int		die(t_philo *philo);
 //UTILS
 int		lock_fork(t_philo *philo);
 int		ft_try_lock(pthread_mutex_t *mutex, int wait_time);
@@ -101,6 +102,5 @@ void	*try_lock_fail(void *param);
 void	*try_lock_sucess(void *param);
 int		try_unlock(t_philo *philo);
 int		pwait(int mseconds);
-void	kill_them_all(pthread_t *thread, int size, int dead);
 
 #endif

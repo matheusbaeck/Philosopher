@@ -6,7 +6,7 @@
 /*   By: baeck <baeck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:12:41 by math42            #+#    #+#             */
-/*   Updated: 2023/12/18 15:29:03 by baeck            ###   ########.fr       */
+/*   Updated: 2023/12/23 14:55:26 by baeck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,4 @@ int	pwait(int mseconds)
 		delta_time = ((tv.tv_sec * 1000 + tv.tv_usec / 1000) - start_time);
 	}
 	return (0);
-}
-
-void	kill_them_all(pthread_t *thread, int size, int dead)
-{
-	int	i;
-
-	i = -1;
-	while (++i < size)
-	{
-		if (i == dead)
-			++i;
-		kill(thread[i], 1);
-	}
-	exit (0);
 }

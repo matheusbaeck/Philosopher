@@ -6,12 +6,12 @@
 #    By: baeck <baeck@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/30 15:06:36 by math42            #+#    #+#              #
-#    Updated: 2023/12/19 12:32:45 by baeck            ###   ########.fr        #
+#    Updated: 2023/12/25 16:19:50 by baeck            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address #-fsanitize=thread
 
 SRC_DIR = src
 OBJ_DIR = .obj
@@ -41,7 +41,6 @@ fclean: clean
 re: fclean all
 
 test: all
-	./philo 3 150 200 200 0 0 15
-	./philo 3 1500 200 200 0 0 15
+	./philo 3 602 200 200 1 1 1
 	
 .PHONY: all clean fclean re test

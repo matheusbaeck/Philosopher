@@ -6,82 +6,81 @@
 /*   By: baeck <baeck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 14:57:11 by math42            #+#    #+#             */
-/*   Updated: 2023/12/19 12:17:48 by baeck            ###   ########.fr       */
+/*   Updated: 2023/12/23 16:15:52 by baeck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-int	think(void *philo)
+int	think(t_philo *ph)
 {
-	t_philo	*ph;
-
-	ph = ((t_philo *)philo);
 	update_time(ph);
 	printf("%lu %d is thinking\n", ph->time - ph->born_time, ph->name + 1);
 	*(ph->status) = THK;
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
-int	eat(void *philo)
+int	eat(t_philo *ph)
 {
-	t_philo	*ph;
-
-	ph = ((t_philo *)philo);
 	while (*(ph->turn) != GREEN)
 	{
 		update_time(ph);
 		if ((ph->time - ph->last_meal) > ph->time_to_die)
-			return (-1);
+			return (EXIT_FAILURE);
 	}
-	*(ph->status) = EAT;
+	update_time(ph);
 	if (lock_fork(ph) != 0)
-		return (-1);
+		return (EXIT_FAILURE);
+	*(ph->status) = EAT;
+	ph->i_eat++;
 	update_time(ph);
 	if ((ph->time - ph->last_meal) > ph->time_to_die)
-		return (-1);
+		return (EXIT_FAILURE);
 	ph->last_meal = ph->time;
 	printf("%ld %d is eating\n", ph->time - ph->born_time, ph->name + 1);
-	pwait(ph->time_to_eat);
+	if ((ph->time - ph->last_meal + ph->time_to_eat) >= ph->time_to_die)
+	{
+		pwait(ph->time_to_die - (ph->time - ph->last_meal));
+		pthread_mutex_unlock(ph->fork[0]);
+		pthread_mutex_unlock(ph->fork[1]);
+		return (EXIT_FAILURE);
+	}
+	else
+		pwait(ph->time_to_eat);
 	pthread_mutex_unlock(ph->fork[0]);
 	pthread_mutex_unlock(ph->fork[1]);
 	update_time(ph);
 	printf("%ld %d drop fork %d\n", ph->time - ph->born_time, ph->name + 1, ph->name + 1);
 	printf("%ld %d drop fork %d\n", ph->time - ph->born_time, ph->name + 1, ph->name + 2);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
-int	psleep(void *philo)
+int	psleep(t_philo *ph)
 {
-	t_philo	*ph;
-
-	ph = ((t_philo *)philo);
 	update_time(ph);
 	if ((ph->time - ph->last_meal) >= ph->time_to_die)
-		die(ph);
-	printf("%lu %d is sleeping\n", ph->time - ph->born_time, ph->name + 1);
+		return (EXIT_FAILURE);
 	*(ph->status) = SLP;
+	printf("%lu %d is sleeping\n", ph->time - ph->born_time, ph->name + 1);
 	if ((ph->time - ph->last_meal + ph->time_to_sleep) >= ph->time_to_die)
 	{
 		pwait(ph->time_to_die - (ph->time - ph->last_meal));
-		die(ph);
+		return (EXIT_FAILURE);
 	}
 	else
 		pwait(ph->time_to_sleep);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
-int	die(void *philo)
+int	die(t_philo *ph)
 {
-	t_philo	*ph;
-	int		last_status;
-
-	ph = ((t_philo *)philo);
-	while (*(ph->turn) == BLUE)
-		pwait(1000);
+	if (ph->must_eat >= 0 && ph->i_eat >= ph->must_eat)
+	{
+		*(ph->status) = DEAD;
+		return (EXIT_SUCCESS);
+	}
 	update_time(ph);
-	last_status = *(ph->status);
-	*(ph->status) = DEAD;
 	printf("%lu %d is dead\n", ph->time - ph->born_time, ph->name + 1);
-	return (last_status);
+	*(ph->status) = DEAD;
+	return (EXIT_FAILURE);
 }
