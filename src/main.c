@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/02/27 14:16:48 by math             ###   ########.fr       */
+/*   Updated: 2024/02/27 18:42:58 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ static int	set_forks(t_data *dt)
 
 int	main(int argc, char **argv)
 {
-	t_data		dt;
-	int			i;
+	t_data	dt;
+	int		i;
 
 	if (check_entry(argc, argv))
 		return (1);
@@ -94,13 +94,19 @@ int	main(int argc, char **argv)
 	i = -1;
 	while (++i < dt.n_philo)
 	{
-		pthread_create(&dt.routine[i], NULL, philo_loop, &dt.philo[i]);
+		if (pthread_create(&dt.routine[i], NULL, philo_loop, &dt.philo[i]) != 0)
+			perror("pthread_create");
 	}
 	i = -1;
 	while (++i < dt.n_philo)
 	{
-		pthread_join(dt.routine[i], NULL);
+		if (pthread_join(dt.routine[i], &dt.exit_status) != 0)
+			perror("pthread_join");
+		else if (dt.exit_status != PTHREAD_CANCELED)
+		{
+			dt.exs = (t_philo_exit *)dt.exit_status;
+			printf("%d thread finish %ld %d\n", dt.exs->phid, dt.routine[dt.exs->phid], dt.exs->status);
+		}
 	}
-	printf("FINISH\n");
 	return (0);
 }

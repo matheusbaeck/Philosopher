@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/02/27 13:59:54 by math             ###   ########.fr       */
+/*   Updated: 2024/02/27 18:09:06 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,14 @@
 #define	T_LOCK 50;
 #define T_UNLOCK 10;
 
+typedef struct s_philo_exit
+{
+	int	phid;
+	int	status;
+	int (*last_act)(void *param);
+}		t_philo_exit;
+
+
 typedef struct s_philo_init
 {
 	int				phid;
@@ -33,7 +41,6 @@ typedef struct s_philo_init
 	long int		time_to_sleep;
 	int				notepme;
 }					t_philo_init;
-
 
 typedef struct s_philo
 {
@@ -55,6 +62,8 @@ typedef struct s_data
 	pthread_mutex_t	fork[MAX_PHILO];
 	pthread_t		routine[MAX_PHILO];
 	t_philo			philo[MAX_PHILO];
+	void			*exit_status;
+	t_philo_exit	*exs;
 	int				n_philo;
 }	t_data;
 
@@ -69,7 +78,7 @@ void		*philo_loop(void *philo);
 int			think(void*philo);
 int			eat(void *philo);
 int			psleep(void *philo);
-int			die(void *philo);
+void		*die(void *philo, int status);
 //UTILS
 long int	get_delta_time(t_philo *philo);
 int			sleep_ms(int mseconds);

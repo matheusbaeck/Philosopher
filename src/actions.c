@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:45:26 by math42            #+#    #+#             */
-/*   Updated: 2024/02/27 14:18:14 by math             ###   ########.fr       */
+/*   Updated: 2024/02/27 18:40:27 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	eat(void *philo)
 	if (ph->notepme-- == 0)
 	{
 		printf("%ld %d end eating\n", get_delta_time(ph), ph->name);
-		exit (0);
+		return (1);
 	}
 	return (0);
 }
@@ -73,12 +73,17 @@ int	psleep(void *philo)
 	return (0);
 }
 
-int	die(void *philo)
+void	*die(void *philo, int status)
 {
 	t_philo	*ph;
+	t_philo_exit *exs;
 
 	ph = ((t_philo *)philo);
-	ph->last_act = die;
-	printf("%lu %d is dead\n", get_delta_time(ph), ph->name);
-	return (0);
+	exs = malloc(sizeof(t_philo_exit));
+	exs->phid = ph->phid;
+	exs->status = status;
+	exs->last_act = ph->last_act;
+	if (status == -1)
+		printf("%lu %d is dead\n", get_delta_time(ph), ph->name);
+	return ((void *)exs);
 }

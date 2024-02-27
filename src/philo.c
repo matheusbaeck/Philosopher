@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:42:37 by math42            #+#    #+#             */
-/*   Updated: 2024/02/27 13:55:14 by math             ###   ########.fr       */
+/*   Updated: 2024/02/27 18:45:20 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int is_alive(t_philo *philo)
 void	*philo_loop(void *philo)
 {
 	t_philo	*ph;
+	int		status;
 
 	ph = ((t_philo *)philo);
 	while (is_alive(ph))
@@ -41,12 +42,12 @@ void	*philo_loop(void *philo)
 			think(ph);
 		else if (ph->last_act == think)
 		{
-			if (eat(ph) == -1)
-				return(printf("%d died trying to eat\n", ph->phid), NULL);
+			status = eat(ph);
+			if (status != 0)
+				return (die(ph, status));
 		}
 		else if (ph->last_act == eat)
 			psleep(ph);
 	}
-	printf("EXIT %d\n", ph->phid);
-	return (NULL);
+	return (die(ph, -1));
 }
