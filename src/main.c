@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/02/27 14:05:09 by math             ###   ########.fr       */
+/*   Updated: 2024/02/27 14:16:48 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,6 @@ int	main(int argc, char **argv)
 	{
 		pthread_join(dt.routine[i], NULL);
 	}
+	printf("FINISH\n");
 	return (0);
 }
