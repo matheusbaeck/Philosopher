@@ -6,43 +6,50 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/02/22 03:40:56 by math             ###   ########.fr       */
+/*   Updated: 2024/02/27 13:36:44 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-static void	philo_init(t_philo *dest, t_philo philo)
+static void	philo_init_cpy(t_philo *dest, t_philo_init philo)
 {
-	*dest = philo;
+	dest->phid = philo.phid;
+	dest->born_time = philo.time;
+	dest->time_to_die = philo.time_to_die;
+	dest->time_to_eat = philo.time_to_eat;
+	dest->time_to_sleep = philo.time_to_sleep;
+	dest->notepme = philo.notepme;
+}
+
+static void	philo_init(t_philo *dest, t_philo_init philo)
+{
+	philo_init_cpy(dest, philo);
 	get_time(dest);
-	dest->born_time = dest->time;
+	dest->name = philo.phid + 1;
 	dest->last_meal = dest->time;
+	dest->last_act = (void *) NULL;
 }
 
 static int	init(int argc, char **argv, t_data *dt)
 {
-	int			i;
-	int 		divisor;
-	long long	black_hole;
+	int				i;
+	int				black_hole;
+	long int		time;
+	struct timeval	tv;
 
 	dt->n_philo = atoi(argv[1]);
-	dt->time_to_die = atoi(argv[2]);
-	dt->time_to_eat = atoi(argv[3]);
-	dt->time_to_sleep = atoi(argv[4]);
-	divisor = 2;
-	if (dt->n_philo % 2 == 1)
-		divisor = 3;
 	i = -1;
+	gettimeofday(&tv, NULL);
+	time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	while (++i < dt->n_philo)
 	{
 		black_hole = -1;
 		if (argc >= 6)
-			black_hole = atoi(argv[i]);
+			black_hole = atoi(argv[i + 6]);
 		philo_init(&dt->philo[i],
-			(t_philo){{0, 0},
-			0, dt->time_to_die, dt->time_to_eat, dt->time_to_sleep,
-			(void *) NULL, black_hole, i, i + 1, 0, 0, divisor});
+			(t_philo_init){i, time, atoi(argv[2]),
+			atoi(argv[3]), atoi(argv[4]), black_hole});
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/02/22 10:46:49 by math             ###   ########.fr       */
+/*   Updated: 2024/02/27 13:37:02 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,30 @@
 #define	T_LOCK 50;
 #define T_UNLOCK 10;
 
+typedef struct s_philo_init
+{
+	int				phid;
+	long int		time;
+	long int		time_to_die;
+	long int		time_to_eat;
+	long int		time_to_sleep;
+	int				notepme;
+}					t_philo_init;
+
+
 typedef struct s_philo
 {
-	pthread_mutex_t	*fork[2];
 	long int		born_time;
 	long int		time_to_die;
 	long int		time_to_eat;
 	long int		time_to_sleep;
+	int				notepme;
+	pthread_mutex_t	*fork[2];
 	int				(*last_act)(void *param);
-	int				number_of_times_each_philosopher_must_eat;
 	int				phid;
 	int				name;
 	long int		time;
 	long int		last_meal;
-	int				div;
 }	t_philo;
 
 typedef struct s_data
@@ -46,9 +56,6 @@ typedef struct s_data
 	pthread_t		routine[MAX_PHILO];
 	t_philo			philo[MAX_PHILO];
 	int				n_philo;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
 }	t_data;
 
 
