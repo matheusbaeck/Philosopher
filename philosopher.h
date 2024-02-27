@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/02/27 13:37:02 by math             ###   ########.fr       */
+/*   Updated: 2024/02/27 13:59:54 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ typedef struct s_data
 }	t_data;
 
 
+//PARSING
+int			check_entry(int argc, char **argv);
 //PHILO
 long int	get_time(t_philo *philo);
 int			is_alive(t_philo *philo);

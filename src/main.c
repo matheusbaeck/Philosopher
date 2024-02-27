@@ -6,11 +6,11 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/02/27 13:36:44 by math             ###   ########.fr       */
+/*   Updated: 2024/02/27 14:05:09 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosopher.h"
+#include "../philosopher.h"
 
 static void	philo_init_cpy(t_philo *dest, t_philo_init philo)
 {
@@ -46,7 +46,7 @@ static int	init(int argc, char **argv, t_data *dt)
 	{
 		black_hole = -1;
 		if (argc >= 6)
-			black_hole = atoi(argv[i + 6]);
+			black_hole = atoi(argv[5 + i]);
 		philo_init(&dt->philo[i],
 			(t_philo_init){i, time, atoi(argv[2]),
 			atoi(argv[3]), atoi(argv[4]), black_hole});
@@ -86,8 +86,8 @@ int	main(int argc, char **argv)
 	t_data		dt;
 	int			i;
 
-	if (argc < 5)
-		return (perror("few args"), 1);
+	if (check_entry(argc, argv))
+		return (1);
 	if (init(argc, argv, &dt) != 0)
 		return (perror("init fail"), 1);
 	set_forks(&dt);

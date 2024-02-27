@@ -6,7 +6,7 @@
 #    By: math <math@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/30 15:06:36 by math42            #+#    #+#              #
-#    Updated: 2024/02/22 10:54:58 by math             ###   ########.fr        #
+#    Updated: 2024/02/27 13:45:07 by math             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,10 @@ fclean: clean
 
 re: fclean all
 
-test: re
+test1:
 	./philo 3 410 200 200
+
+test2:
+	./philo 3 410 200 200 2 2 10
 	
 .PHONY: all clean fclean re test

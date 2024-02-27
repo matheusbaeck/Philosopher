@@ -6,11 +6,11 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:12:41 by math42            #+#    #+#             */
-/*   Updated: 2024/02/22 10:48:21 by math             ###   ########.fr       */
+/*   Updated: 2024/02/27 13:55:14 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosopher.h"
+#include "../philosopher.h"
 
 long int get_delta_time(t_philo *philo)
 {

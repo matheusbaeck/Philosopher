@@ -6,11 +6,11 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:42:37 by math42            #+#    #+#             */
-/*   Updated: 2024/02/22 10:49:47 by math             ###   ########.fr       */
+/*   Updated: 2024/02/27 13:55:14 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosopher.h"
+#include "../philosopher.h"
 
 long int	get_time(t_philo *philo)
 {
