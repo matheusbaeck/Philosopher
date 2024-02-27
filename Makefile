@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: baeck <baeck@student.42.fr>                +#+  +:+       +#+         #
+#    By: math <math@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/30 15:06:36 by math42            #+#    #+#              #
-#    Updated: 2023/11/12 17:28:48 by baeck            ###   ########.fr        #
+#    Updated: 2024/02/22 10:54:58 by math             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,6 @@ fclean: clean
 re: fclean all
 
 test: re
-	./philo 3 1000 200 200s
+	./philo 3 410 200 200
 	
 .PHONY: all clean fclean re test

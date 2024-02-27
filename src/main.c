@@ -3,16 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2023/09/13 12:57:16 by math42           ###   ########.fr       */
+/*   Updated: 2024/02/22 03:40:56 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-int	init(int argc, char **argv, t_data *dt)
+static void	philo_init(t_philo *dest, t_philo philo)
+{
+	*dest = philo;
+	get_time(dest);
+	dest->born_time = dest->time;
+	dest->last_meal = dest->time;
+}
+
+static int	init(int argc, char **argv, t_data *dt)
 {
 	int			i;
 	int 		divisor;
@@ -34,7 +42,34 @@ int	init(int argc, char **argv, t_data *dt)
 		philo_init(&dt->philo[i],
 			(t_philo){{0, 0},
 			0, dt->time_to_die, dt->time_to_eat, dt->time_to_sleep,
-			(void *) NULL, black_hole, i, 0, 0, divisor});
+			(void *) NULL, black_hole, i, i + 1, 0, 0, divisor});
+	}
+	return (0);
+}
+
+static int	set_forks(t_data *dt)
+{
+	int	i;
+
+	i = -1;
+	while (++i < dt->n_philo)
+	{
+		if (pthread_mutex_init(&dt->fork[i], NULL))
+			printf("fork %d fail at %p\n", i, &dt->fork[i]);
+	}
+	i = -1;
+	while (++ i < dt->n_philo)
+	{
+		if (i % 2 == 0)
+		{
+			dt->philo[i].fork[0] = &dt->fork[((i + dt->n_philo - 1) % dt->n_philo)];
+			dt->philo[i].fork[1] = &dt->fork[((i + dt->n_philo + 1) % dt->n_philo)];
+		}
+		else
+		{
+			dt->philo[i].fork[1] = &dt->fork[((i + dt->n_philo - 1) % dt->n_philo)];
+			dt->philo[i].fork[0] = &dt->fork[((i + dt->n_philo + 1) % dt->n_philo)];
+		}
 	}
 	return (0);
 }

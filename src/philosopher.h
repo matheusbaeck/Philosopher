@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math42 <math42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2023/09/13 12:57:59 by math42           ###   ########.fr       */
+/*   Updated: 2024/02/22 10:46:49 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_philo
 	long int		time_to_sleep;
 	int				(*last_act)(void *param);
 	int				number_of_times_each_philosopher_must_eat;
+	int				phid;
 	int				name;
 	long int		time;
 	long int		last_meal;
@@ -52,18 +53,16 @@ typedef struct s_data
 
 
 //PHILO
-void	philo_init(t_philo *dest, t_philo philo);
-int		get_time(t_philo *philo);
-int		set_forks(t_data *dt);
-void	*philo_loop(void *philo);
+long int	get_time(t_philo *philo);
+int			is_alive(t_philo *philo);
+void		*philo_loop(void *philo);
 //ACTIONS
-int		think(void*philo);
-int		eat(void *philo);
-int		psleep(void *philo);
-int		die(void *philo);
+int			think(void*philo);
+int			eat(void *philo);
+int			psleep(void *philo);
+int			die(void *philo);
 //UTILS
-int	try_lock(t_philo *philo);
-int	try_unlock(t_philo *philo);
-int	pwait(int mseconds);
+long int	get_delta_time(t_philo *philo);
+int			sleep_ms(int mseconds);
 
 #endif
