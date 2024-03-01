@@ -6,11 +6,12 @@
 #    By: math <math@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/30 15:06:36 by math42            #+#    #+#              #
-#    Updated: 2024/02/27 18:30:17 by math             ###   ########.fr        #
+#    Updated: 2024/02/29 20:28:26 by math             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
+#CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=thread
 
 SRC_DIR = src
@@ -40,10 +41,10 @@ fclean: clean
 
 re: fclean all
 
-test1:
-	./philo 3 410 200 200
+test1: all
+	./philo 3 300 200 100
 
-test2:
+test2: all
 	./philo 3 410 200 200 10 2 2
 	
 .PHONY: all clean fclean re test

@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/02/27 18:09:06 by math             ###   ########.fr       */
+/*   Updated: 2024/02/29 20:03:10 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,28 @@
 #include <pthread.h>
 #include <stdlib.h> //atoi
 #include <sys/time.h>
+#include <signal.h>
 
-#define MAX_PHILO 10
-#define	T_LOCK 50;
-#define T_UNLOCK 10;
+// #define	T_LOCK 50;
+// #define T_UNLOCK 10;
+
+enum	e_action
+{
+	UNITIALIZED = 24,
+	THINK = 42,
+	EAT = 21,
+	SLEEP = 84,
+	DEAD = -42,
+	FINISH = 420,
+};
 
 typedef struct s_philo_exit
 {
-	int	phid;
-	int	status;
-	int (*last_act)(void *param);
-}		t_philo_exit;
+	int				phid;
+	int 			name;
+	int				status;
+	long int		time_of_death;
+}					t_philo_exit;
 
 
 typedef struct s_philo_init
@@ -40,47 +51,56 @@ typedef struct s_philo_init
 	long int		time_to_eat;
 	long int		time_to_sleep;
 	int				notepme;
+	pthread_mutex_t	*mutex;
+	t_philo_exit	*exs;
 }					t_philo_init;
 
 typedef struct s_philo
 {
-	long int		born_time;
+	pthread_mutex_t	*fork[2];
+	pthread_mutex_t	*mutex;
+	long int		time;
+	long int		time_zero;
 	long int		time_to_die;
 	long int		time_to_eat;
 	long int		time_to_sleep;
+	long int		last_meal;
 	int				notepme;
-	pthread_mutex_t	*fork[2];
-	int				(*last_act)(void *param);
+	int				last_act;
 	int				phid;
 	int				name;
-	long int		time;
-	long int		last_meal;
+	t_philo_exit	*exs;
 }	t_philo;
 
 typedef struct s_data
 {
-	pthread_mutex_t	fork[MAX_PHILO];
-	pthread_t		routine[MAX_PHILO];
-	t_philo			philo[MAX_PHILO];
-	void			*exit_status;
+	pthread_mutex_t	*fork;
+	pthread_mutex_t	mutex;
+	pthread_t		*routine;
+	t_philo			*philo;
 	t_philo_exit	*exs;
+	long int		time_zero;
 	int				n_philo;
-}	t_data;
+	int				time_to_die;
+}					t_data;
 
 
 //PARSING
 int			check_entry(int argc, char **argv);
 //PHILO
-long int	get_time(t_philo *philo);
+void		set_time(t_philo *philo);
 int			is_alive(t_philo *philo);
 void		*philo_loop(void *philo);
 //ACTIONS
-int			think(void*philo);
-int			eat(void *philo);
-int			psleep(void *philo);
-void		*die(void *philo, int status);
+int			think(t_philo *ph);
+int			eat(t_philo *ph);
+int			philo_sleep(t_philo *ph);
+void		*die(t_philo *ph);
 //UTILS
 long int	get_delta_time(t_philo *philo);
 int			sleep_ms(int mseconds);
+void		dbfree(void **ptr);
+void		set_zero(t_philo *philo, int size, long int time_zero);
+long int	get_time(void);
 
 #endif

@@ -6,48 +6,47 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:42:37 by math42            #+#    #+#             */
-/*   Updated: 2024/02/27 18:45:20 by math             ###   ########.fr       */
+/*   Updated: 2024/03/01 18:56:54 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosopher.h"
 
-long int	get_time(t_philo *philo)
+void	set_time(t_philo *philo)
 {
-	struct timeval	tv;
+	philo->time = get_time();
+}
 
-	gettimeofday(&tv, NULL);
-	philo->time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-	return (philo->time);
+long int get_delta_time(t_philo *philo)
+{
+	set_time(philo);
+	return (philo->time - philo->time_zero);
 }
 
 int is_alive(t_philo *philo)
 {
-	get_time(philo);
+	set_time(philo);
 	if ((philo->time - philo->last_meal) < philo->time_to_die)
 		return (1);
+	philo->exs->time_of_death = philo->time - philo->time_zero;
+	philo->exs->status = philo->last_act;
+	philo->last_act = DEAD;
 	return (0);
 }
 
 void	*philo_loop(void *philo)
 {
 	t_philo	*ph;
-	int		status;
 
 	ph = ((t_philo *)philo);
-	while (is_alive(ph))
+	while (ph->notepme != 0)
 	{
-		//printf("==========<%d>==========\n", ph->name);
-		if (ph->last_act == NULL || ph->last_act == psleep)
+		if (ph->last_act == UNITIALIZED || ph->last_act == SLEEP)
 			think(ph);
-		else if (ph->last_act == think)
-		{
-			status = eat(ph);
-			if (status != 0)
-				return (die(ph, status));
-		}
-		else if (ph->last_act == eat)
-			psleep(ph);
+		else if (ph->last_act == THINK)
+			eat(ph);
+		else if (ph->last_act == EAT)
+			philo_sleep(ph);
 	}
-	return (die(ph, -1));
+	return ((void *)ph->exs);
 }
