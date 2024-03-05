@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/02/29 20:03:10 by math             ###   ########.fr       */
+/*   Updated: 2024/03/05 21:39:40 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,13 @@
 
 enum	e_action
 {
-	UNITIALIZED = 24,
 	THINK = 42,
 	EAT = 21,
 	SLEEP = 84,
+};
+
+enum	e_status
+{
 	DEAD = -42,
 	FINISH = 420,
 };
@@ -51,6 +54,7 @@ typedef struct s_philo_init
 	long int		time_to_eat;
 	long int		time_to_sleep;
 	int				notepme;
+	int				*status;
 	pthread_mutex_t	*mutex;
 	t_philo_exit	*exs;
 }					t_philo_init;
@@ -69,6 +73,7 @@ typedef struct s_philo
 	int				last_act;
 	int				phid;
 	int				name;
+	int				*status;
 	t_philo_exit	*exs;
 }	t_philo;
 
@@ -82,6 +87,7 @@ typedef struct s_data
 	long int		time_zero;
 	int				n_philo;
 	int				time_to_die;
+	int				status;
 }					t_data;
 
 

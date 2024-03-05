@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/03/01 21:36:59 by math             ###   ########.fr       */
+/*   Updated: 2024/03/05 22:00:36 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static void	philo_init(t_philo *self, long int time, t_philo_init philo)
 	self->fork[0] = NULL;
 	self->fork[1] = NULL;
 	self->mutex = philo.mutex;
-	self->last_act = UNITIALIZED;
+	self->status = philo.status;
+	self->last_act = SLEEP;
 	self->phid = philo.phid;
 	self->name = philo.phid + 1;
 	self->time = time;
@@ -70,6 +71,7 @@ static void	init_data(t_data *dt, int n_philo, int time_to_die)
 	pthread_mutex_init(&dt->mutex, NULL);
 	dt->routine = (pthread_t *)malloc(dt->n_philo * sizeof(pthread_t));
 	dt->philo = (t_philo *)malloc(dt->n_philo * sizeof(t_philo));
+	dt->status = 0;
 	dt->exs = (t_philo_exit *)malloc(dt->n_philo * sizeof(t_philo_exit));
 	if (!(dt->fork && dt->routine && dt->philo && dt->exs))
 	{
@@ -94,7 +96,7 @@ static int	init(int argc, char **argv, t_data *dt)
 			black_hole = atoi(argv[5 + i]);
 		philo_init(&dt->philo[i], dt->time_zero, (t_philo_init){i,
 			dt->time_zero, dt->time_to_die, atoi(argv[3]), atoi(argv[4]),
-			black_hole, &dt->mutex, &dt->exs[i]});
+			black_hole, &dt->status, &dt->mutex, &dt->exs[i]});
 	}
 	return (0);
 }
@@ -135,17 +137,22 @@ static void	is_there_any_dead(t_data *dt)
 		i = -1;
 		while (++i < dt->n_philo)
 		{
-			pthread_mutex_lock(dt->philo[i].fork[0]);
+			pthread_mutex_lock(dt->philo[i].fork[1]);
 			if (get_time() - dt->philo[i].last_meal >= dt->time_to_die)
 			{
-				printf("%ld\t\t%d is DEEEEEEEEEEEEEAD\n", get_time() - dt->time_zero, i + 1);
-				exit (1);
+				printf("%ld\t%d is DEAD\n", get_time() - dt->time_zero, i + 1);
+				i = -1;
 			}
-			pthread_mutex_unlock(dt->philo[i].fork[0]);
+			pthread_mutex_unlock(dt->philo[i].fork[1]);
+			pthread_mutex_lock(&dt->mutex);
+			if (i == -1)
+				dt->status = -1;
+			if (dt->status == dt->n_philo || dt->status == -1)
+				return ;
+			pthread_mutex_unlock(&dt->mutex);
 		}
-		usleep(10 * dt->n_philo);
+		usleep(25 * dt->n_philo);
 	}
-	return ;
 }
 
 void	print_data(t_data dt)
@@ -212,7 +219,6 @@ int	main(int argc, char **argv)
 	if (init(argc, argv, &dt) != 0)
 		return (perror("init"), 1);
 	set_forks(&dt);
-	// print_data(dt);
 	i = -1;
 	while (++i < dt.n_philo)
 	{
