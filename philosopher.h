@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/06 16:19:51 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/06 17:48:32 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void		*philo_loop(void *philo);
 //MUTEX_GETSET
 long int	get_last_meal(t_philo *self);
 int			get_status(t_philo *self);
-// void		*set_last_meal_t(void *void_param);
 void		set_last_meal(t_philo *self, long int val);
 void		set_status(t_philo *self, int val);
 void		add_status(t_philo *self, int val);

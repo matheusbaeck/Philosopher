@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:54:18 by math              #+#    #+#             */
-/*   Updated: 2024/02/27 14:00:39 by math             ###   ########.fr       */
+/*   Updated: 2024/03/06 18:45:29 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int check_entry(int argc, char **argv)
 {
     (void)argv;
-    if (argc < 5)
-		return (perror("few args"), 1);
+    if (argc < 5 || argc > 6)
+		  return (perror("few args"), 1);
     return (0);
 }

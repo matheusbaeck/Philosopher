@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 10:54:59 by math              #+#    #+#             */
-/*   Updated: 2024/03/06 16:18:39 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/06 17:48:27 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,6 @@ long int	get_last_meal(t_philo *self)
 	pthread_mutex_unlock(self->mutex_lstmeal);
 	return (ret_val);
 }
-
-// void	*set_last_meal_t(void *void_param)
-// {
-// 	t_set_last_meal	*param;
-// 	t_philo			*self;
-// 	long int		val;
-
-// 	param = (t_set_last_meal *)void_param;
-// 	self = param->ph;
-// 	val = param->val;
-// 	pthread_mutex_lock(self->mutex_lstmeal);
-// 	self->last_meal = val;
-// 	pthread_mutex_unlock(self->mutex_lstmeal);
-// 	return (NULL);
-// }
 
 void	set_last_meal(t_philo *self, long int val)
 {
