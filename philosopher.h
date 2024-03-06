@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/06 11:58:38 by math             ###   ########.fr       */
+/*   Updated: 2024/03/06 15:46:21 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,10 @@ enum	e_status
 	FINISH = 420,
 };
 
-typedef struct s_philo_exit
-{
-	int				phid;
-	int 			name;
-	int				status;
-	long int		time_of_death;
-}					t_philo_exit;
-
-
 typedef struct s_philo_init
 {
 	int				phid;
-	long int		time;
+	long int		time_zero;
 	long int		time_to_die;
 	long int		time_to_eat;
 	long int		time_to_sleep;
@@ -57,7 +48,6 @@ typedef struct s_philo_init
 	int				*status;
 	pthread_mutex_t	*mutex_lstmeal;
 	pthread_mutex_t	*mutex_status;
-	t_philo_exit	*exs;
 }					t_philo_init;
 
 typedef struct s_philo
@@ -65,7 +55,6 @@ typedef struct s_philo
 	pthread_mutex_t	*fork[2];
 	pthread_mutex_t	*mutex_lstmeal;
 	pthread_mutex_t	*mutex_status;
-	long int		time;
 	long int		time_zero;
 	long int		time_to_die;
 	long int		time_to_eat;
@@ -76,7 +65,6 @@ typedef struct s_philo
 	int				phid;
 	int				name;
 	int				*status;
-	t_philo_exit	*exs;
 }	t_philo;
 
 typedef struct s_data
@@ -86,7 +74,6 @@ typedef struct s_data
 	pthread_mutex_t	mutex_status;
 	pthread_t		*routine;
 	t_philo			*philo;
-	t_philo_exit	*exs;
 	long int		time_zero;
 	int				n_philo;
 	int				time_to_die;
@@ -99,7 +86,8 @@ typedef struct s_set_last_meal
 	long int		val;
 }					t_set_last_meal;
 
-
+//INIT
+int	init(int argc, char **argv, t_data *dt);
 //PARSING
 int			check_entry(int argc, char **argv);
 //PHILO

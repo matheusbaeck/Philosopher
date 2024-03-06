@@ -3,24 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:42:37 by math42            #+#    #+#             */
-/*   Updated: 2024/03/06 12:16:10 by math             ###   ########.fr       */
+/*   Updated: 2024/03/06 16:11:03 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosopher.h"
 
-void	set_time(t_philo *self)
-{
-	self->time = get_time();
-}
-
 long int get_print_time(t_philo *self)
 {
-	set_time(self);
-	return (self->time - self->time_zero);
+	return (get_time() - self->time_zero);
 }
 
 void	*philo_loop(void *philo)

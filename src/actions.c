@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:45:26 by math42            #+#    #+#             */
-/*   Updated: 2024/03/06 12:27:15 by math             ###   ########.fr       */
+/*   Updated: 2024/03/06 16:08:44 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,50 +25,21 @@ static int	lock_fork(t_philo *ph)
 
 	last_meal = get_last_meal(ph);
 	pthread_mutex_lock(ph->fork[0]);
-	if (get_status(ph) == -1)
+	if ((get_time() - last_meal) >= ph->time_to_die || get_status(ph) <= 0)
 	{
 		pthread_mutex_unlock(ph->fork[0]);
-		return (1);
-	}
-	else if ((get_time() - last_meal) >= ph->time_to_die)
-	{
-		pthread_mutex_unlock(ph->fork[0]);
-		while (get_status(ph) != -1)
-			usleep(25);
 		return (1);
 	}
 	printf("%ld\t\t%d has taken a fork\n", get_print_time(ph), ph->name);
 	pthread_mutex_lock(ph->fork[1]);
-	if (get_status(ph) == -1)
+	if ((get_time() - last_meal) >= ph->time_to_die || get_status(ph) <= 0)
 	{
 		pthread_mutex_unlock(ph->fork[0]);
 		pthread_mutex_unlock(ph->fork[1]);
-		return (1);
-	}
-	if ((get_time() - last_meal) >= ph->time_to_die)
-	{
-		pthread_mutex_unlock(ph->fork[0]);
-		pthread_mutex_unlock(ph->fork[1]);
-		while (get_status(ph) != -1)
-			usleep(25);
 		return (1);
 	}
 	printf("%ld\t\t%d has taken a fork\n", get_print_time(ph), ph->name);
 	return (0);
-}
-
-static void unlock_fork(t_philo *ph)
-{
-	int	status;
-
-	pthread_mutex_unlock(ph->fork[1]);
-	pthread_mutex_unlock(ph->fork[0]);
-	status = get_status(ph);
-	if (status > 0)
-	{
-		printf("%ld\t\t%d has droped a fork\n", get_print_time(ph), ph->name);
-		printf("%ld\t\t%d has droped a fork\n", get_print_time(ph), ph->name);
-	}
 }
 
 int	eat(t_philo *ph)
@@ -84,7 +55,13 @@ int	eat(t_philo *ph)
 	// pthread_detach(aux);
 	//set_last_meal(ph, get_time() + ph->time_to_eat);
 	sleep_ms(ph->time_to_eat);
-	unlock_fork(ph);
+	pthread_mutex_unlock(ph->fork[1]);
+	pthread_mutex_unlock(ph->fork[0]);
+	if (get_status(ph) > 0)
+	{
+		printf("%ld\t\t%d has droped a fork\n", get_print_time(ph), ph->name);
+		printf("%ld\t\t%d has droped a fork\n", get_print_time(ph), ph->name);
+	}
 	if (ph->notepme-- == 0)
 	{
 		printf("%ld\t\t%d finish eating\n", get_print_time(ph), ph->name);
@@ -105,7 +82,7 @@ int	philo_sleep(t_philo	*ph)
 void	*die(t_philo *ph)
 {
 	set_status(ph, -1);
-	ph->exs->time_of_death = ph->time - ph->time_zero;
-	ph->exs->status = ph->last_act;
-	return ((void *)ph->exs);
+	printf("\n\t============\n\tDEATH REPORT\n\tname:%d\n\ttime:%ld\n\tstatus:%d\n",
+			ph->name, get_time() - ph->time_zero, ph->last_act);
+	return (NULL);
 }
