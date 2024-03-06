@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/05 21:39:40 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/06 11:58:38 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,16 @@ typedef struct s_philo_init
 	long int		time_to_sleep;
 	int				notepme;
 	int				*status;
-	pthread_mutex_t	*mutex;
+	pthread_mutex_t	*mutex_lstmeal;
+	pthread_mutex_t	*mutex_status;
 	t_philo_exit	*exs;
 }					t_philo_init;
 
 typedef struct s_philo
 {
 	pthread_mutex_t	*fork[2];
-	pthread_mutex_t	*mutex;
+	pthread_mutex_t	*mutex_lstmeal;
+	pthread_mutex_t	*mutex_status;
 	long int		time;
 	long int		time_zero;
 	long int		time_to_die;
@@ -80,7 +82,8 @@ typedef struct s_philo
 typedef struct s_data
 {
 	pthread_mutex_t	*fork;
-	pthread_mutex_t	mutex;
+	pthread_mutex_t	mutex_lstmeal;
+	pthread_mutex_t	mutex_status;
 	pthread_t		*routine;
 	t_philo			*philo;
 	t_philo_exit	*exs;
@@ -90,12 +93,27 @@ typedef struct s_data
 	int				status;
 }					t_data;
 
+typedef struct s_set_last_meal
+{
+	t_philo			*ph;
+	long int		val;
+}					t_set_last_meal;
+
 
 //PARSING
 int			check_entry(int argc, char **argv);
 //PHILO
-void		set_time(t_philo *philo);
-int			is_alive(t_philo *philo);
+void		set_time(t_philo *self);
+long int	get_print_time(t_philo *self);
+
+//MUTEX_GETSET
+long int	get_last_meal(t_philo *self);
+int			get_status(t_philo *self);
+void		*set_last_meal_t(void *void_param);
+void		set_last_meal(t_philo *self, long int val);
+void		set_status(t_philo *self, int val);
+void		add_status(t_philo *self, int val);
+
 void		*philo_loop(void *philo);
 //ACTIONS
 int			think(t_philo *ph);
@@ -103,7 +121,6 @@ int			eat(t_philo *ph);
 int			philo_sleep(t_philo *ph);
 void		*die(t_philo *ph);
 //UTILS
-long int	get_delta_time(t_philo *philo);
 int			sleep_ms(int mseconds);
 void		dbfree(void **ptr);
 void		set_zero(t_philo *philo, int size, long int time_zero);

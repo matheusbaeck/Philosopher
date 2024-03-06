@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/03/05 22:00:36 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/06 12:16:32 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@ static void	philo_init(t_philo *self, long int time, t_philo_init philo)
 	self->notepme = philo.notepme;
 	self->fork[0] = NULL;
 	self->fork[1] = NULL;
-	self->mutex = philo.mutex;
+	self->mutex_lstmeal = philo.mutex_lstmeal;
+	self->mutex_status = philo.mutex_status;
 	self->status = philo.status;
 	self->last_act = SLEEP;
 	self->phid = philo.phid;
 	self->name = philo.phid + 1;
 	self->time = time;
-	self->last_meal = self->time;
+	self->last_meal = time;
 	self->exs = philo.exs;
 	self->exs->phid = self->phid;
 	self->exs->name = self->name;
@@ -68,10 +69,11 @@ static void	init_data(t_data *dt, int n_philo, int time_to_die)
 	dt->n_philo = n_philo;
 	dt->time_to_die = time_to_die;
 	dt->fork = (pthread_mutex_t *)malloc(dt->n_philo * sizeof(pthread_mutex_t));
-	pthread_mutex_init(&dt->mutex, NULL);
+	pthread_mutex_init(&dt->mutex_lstmeal, NULL);
+	pthread_mutex_init(&dt->mutex_status, NULL);
 	dt->routine = (pthread_t *)malloc(dt->n_philo * sizeof(pthread_t));
 	dt->philo = (t_philo *)malloc(dt->n_philo * sizeof(t_philo));
-	dt->status = 0;
+	dt->status = dt->n_philo;
 	dt->exs = (t_philo_exit *)malloc(dt->n_philo * sizeof(t_philo_exit));
 	if (!(dt->fork && dt->routine && dt->philo && dt->exs))
 	{
@@ -96,7 +98,7 @@ static int	init(int argc, char **argv, t_data *dt)
 			black_hole = atoi(argv[5 + i]);
 		philo_init(&dt->philo[i], dt->time_zero, (t_philo_init){i,
 			dt->time_zero, dt->time_to_die, atoi(argv[3]), atoi(argv[4]),
-			black_hole, &dt->status, &dt->mutex, &dt->exs[i]});
+			black_hole, &dt->status, &dt->mutex_lstmeal, &dt->mutex_status, &dt->exs[i]});
 	}
 	return (0);
 }
@@ -131,25 +133,22 @@ static int	set_forks(t_data *dt)
 static void	is_there_any_dead(t_data *dt)
 {
 	int	i;
+	long int	last;
 
 	while (1)
 	{
 		i = -1;
 		while (++i < dt->n_philo)
 		{
-			pthread_mutex_lock(dt->philo[i].fork[1]);
-			if (get_time() - dt->philo[i].last_meal >= dt->time_to_die)
+			last = get_last_meal(&dt->philo[i]);
+			if (get_time() - last >= dt->time_to_die)
 			{
 				printf("%ld\t%d is DEAD\n", get_time() - dt->time_zero, i + 1);
-				i = -1;
-			}
-			pthread_mutex_unlock(dt->philo[i].fork[1]);
-			pthread_mutex_lock(&dt->mutex);
-			if (i == -1)
-				dt->status = -1;
-			if (dt->status == dt->n_philo || dt->status == -1)
+				set_status(&dt->philo[i], -1);
 				return ;
-			pthread_mutex_unlock(&dt->mutex);
+			}
+			if (get_status(&dt->philo[i]) <= 0)
+				return ;
 		}
 		usleep(25 * dt->n_philo);
 	}
@@ -184,7 +183,8 @@ void	print_data(t_data dt)
 	{
 		dprintf(fd, "\t\t%p\n", &dt.fork[i]);
 	}
-	dprintf(fd, "mutex\t\t%p\n", &dt.mutex);
+	dprintf(fd, "mutex\t\t%p\n", &dt.mutex_lstmeal);
+	dprintf(fd, "mutex\t\t%p\n", &dt.mutex_status);
 	dprintf(fd, "exs\t\t%p\n", dt.exs);
 	i = -1;
 	while (++i < dt.n_philo)
@@ -195,7 +195,8 @@ void	print_data(t_data dt)
 		dprintf(fd, "time to sleep\t%ld\n", dt.philo[i].time_to_sleep);
 		dprintf(fd, "time to eat\t%ld\n", dt.philo[i].time_to_eat);
 		dprintf(fd, "notepme\t\t%d\n", dt.philo[i].notepme);
-		dprintf(fd, "mutex\t\t%p\n", dt.philo[i].mutex);
+		dprintf(fd, "mutex\t\t%p\n", dt.philo[i].mutex_lstmeal);
+		dprintf(fd, "mutex\t\t%p\n", dt.philo[i].mutex_status);
 		dprintf(fd, "exit sts\t%p\n", dt.philo[i].exs);
 		dprintf(fd, "fork[0]\t\t%p\n", dt.philo[i].fork[0]);
 		dprintf(fd, "fork[1]\t\t%p\n", dt.philo[i].fork[1]);
@@ -235,7 +236,7 @@ int	main(int argc, char **argv)
 		}
 		else if ((void *)&dt.exs[i] != PTHREAD_CANCELED)
 		{
-			printf("%ld %d is dead %ld\n", get_time() - dt.time_zero,
+			printf("%ld\t%d joined with status %ld\n", get_time() - dt.time_zero,
 				dt.exs[i].phid, dt.exs[i].time_of_death);
 		}
 		else
