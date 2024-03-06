@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:45:26 by math42            #+#    #+#             */
-/*   Updated: 2024/03/06 21:55:22 by math             ###   ########.fr       */
+/*   Updated: 2024/03/07 00:35:10 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ static int	lock_fork(t_philo *ph)
 		return (1);
 	}
 	printf("%ld\t\t%d has taken a fork\n", get_print_time(ph), ph->name);
+	if (ph->fork[0] == ph->fork[1])
+	{
+		sleep_ms(ph->time_to_die);
+		pthread_mutex_unlock(ph->fork[0]);
+		return (1);
+	}
 	pthread_mutex_lock(ph->fork[1]);
 	if ((get_time() - last_meal) >= ph->time_to_die || get_status(ph) <= 0)
 	{
