@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:45:26 by math42            #+#    #+#             */
-/*   Updated: 2024/03/06 12:18:59 by math             ###   ########.fr       */
+/*   Updated: 2024/03/06 12:27:15 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,32 @@ static int	lock_fork(t_philo *ph)
 
 	last_meal = get_last_meal(ph);
 	pthread_mutex_lock(ph->fork[0]);
-	if ((get_time() - last_meal) >= ph->time_to_die || get_status(ph) == -1)
+	if (get_status(ph) == -1)
 	{
 		pthread_mutex_unlock(ph->fork[0]);
 		return (1);
 	}
+	else if ((get_time() - last_meal) >= ph->time_to_die)
+	{
+		pthread_mutex_unlock(ph->fork[0]);
+		while (get_status(ph) != -1)
+			usleep(25);
+		return (1);
+	}
 	printf("%ld\t\t%d has taken a fork\n", get_print_time(ph), ph->name);
 	pthread_mutex_lock(ph->fork[1]);
-	if ((get_time() - last_meal) >= ph->time_to_die || get_status(ph) == -1)
+	if (get_status(ph) == -1)
 	{
 		pthread_mutex_unlock(ph->fork[0]);
 		pthread_mutex_unlock(ph->fork[1]);
+		return (1);
+	}
+	if ((get_time() - last_meal) >= ph->time_to_die)
+	{
+		pthread_mutex_unlock(ph->fork[0]);
+		pthread_mutex_unlock(ph->fork[1]);
+		while (get_status(ph) != -1)
+			usleep(25);
 		return (1);
 	}
 	printf("%ld\t\t%d has taken a fork\n", get_print_time(ph), ph->name);
