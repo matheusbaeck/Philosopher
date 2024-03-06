@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:45:26 by math42            #+#    #+#             */
-/*   Updated: 2024/03/06 16:15:36 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/06 21:55:22 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,11 @@ static int	lock_fork(t_philo *ph)
 
 int	eat(t_philo *ph)
 {
-	// pthread_t	aux;
-
 	ph->last_act = EAT;
 	if (lock_fork(ph))
 		return (-1);
 	printf("%ld\t\t%d is eating\n", get_print_time(ph), ph->name);
 	set_last_meal(ph, get_time() + ph->time_to_eat);
-	// pthread_create(&aux, NULL, &set_last_meal, &((t_set_last_meal){ph, get_time() + ph->time_to_eat}));
-	// pthread_detach(aux);
-	//set_last_meal(ph, get_time() + ph->time_to_eat);
 	sleep_ms(ph->time_to_eat);
 	pthread_mutex_unlock(ph->fork[1]);
 	pthread_mutex_unlock(ph->fork[0]);

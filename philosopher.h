@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/06 17:48:32 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/06 19:20:04 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,9 @@ int			philo_sleep(t_philo *ph);
 //UTILS
 int			sleep_ms(int mseconds);
 long int	get_time(void);
+int			ft_strlen(const char *s);
+int			ft_isdigit(int c);
+int 		is_alldigit(char *str);
+int			ft_atoi(const char *str);
 
 #endif

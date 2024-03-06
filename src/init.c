@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/03/06 15:57:18 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/06 22:34:46 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,21 @@ static int	init_data(t_data *dt, int n_philo, int time_to_die)
 int	init(int argc, char **argv, t_data *dt)
 {
 	int	i;
+	int	j;
 	int	black_hole;
 
 	if (init_data(dt, atoi(argv[1]), atoi(argv[2])))
-		return (free(&dt), 1);
+		return (free(dt), 1);
 	i = -1;
+	j = -1;
 	while (++i < dt->n_philo)
 	{
 		black_hole = -1;
 		if (argc >= 6)
-			black_hole = atoi(argv[5 + i]);
+		{
+			black_hole = atoi(&argv[5][++j]);
+			j += ft_strlen(&argv[5][j]);
+		}
 		philo_init(&dt->philo[i], (t_philo_init){i,
 			dt->time_zero, dt->time_to_die, atoi(argv[3]), atoi(argv[4]),
 			black_hole, &dt->status, &dt->mutex_lstmeal, &dt->mutex_status});
