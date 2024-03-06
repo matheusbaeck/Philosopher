@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:45:26 by math42            #+#    #+#             */
-/*   Updated: 2024/03/06 16:08:44 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/06 16:15:36 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,3 @@ int	philo_sleep(t_philo	*ph)
 	return (0);
 }
 
-void	*die(t_philo *ph)
-{
-	set_status(ph, -1);
-	printf("\n\t============\n\tDEATH REPORT\n\tname:%d\n\ttime:%ld\n\tstatus:%d\n",
-			ph->name, get_time() - ph->time_zero, ph->last_act);
-	return (NULL);
-}
