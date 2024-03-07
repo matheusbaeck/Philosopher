@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/03/06 22:34:46 by math             ###   ########.fr       */
+/*   Updated: 2024/03/07 01:40:39 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	philo_init(t_philo *self, t_philo_init philo)
 	self->time_to_sleep = philo.time_to_sleep;
 	self->notepme = philo.notepme;
 	self->mutex_lstmeal = philo.mutex_lstmeal;
+	pthread_mutex_init(self->mutex_lstmeal, NULL);
 	self->mutex_status = philo.mutex_status;
 	self->fork[0] = NULL;
 	self->fork[1] = NULL;
@@ -61,12 +62,12 @@ static int	init_data(t_data *dt, int n_philo, int time_to_die)
 	dt->n_philo = n_philo;
 	dt->time_to_die = time_to_die;
 	dt->fork = (pthread_mutex_t *)malloc(dt->n_philo * sizeof(pthread_mutex_t));
-	pthread_mutex_init(&dt->mutex_lstmeal, NULL);
+	dt->mutex_lstmeal = (pthread_mutex_t *)malloc(dt->n_philo * sizeof(pthread_mutex_t));
 	pthread_mutex_init(&dt->mutex_status, NULL);
 	dt->routine = (pthread_t *)malloc(dt->n_philo * sizeof(pthread_t));
 	dt->philo = (t_philo *)malloc(dt->n_philo * sizeof(t_philo));
 	dt->status = dt->n_philo;
-	if (!(dt->fork && dt->routine && dt->philo))
+	if (!(dt->fork && dt->routine && dt->philo && dt->mutex_lstmeal))
 	{
 		printf("Philosopher: memory allocation error!\n");
 		return(1);
@@ -95,7 +96,7 @@ int	init(int argc, char **argv, t_data *dt)
 		}
 		philo_init(&dt->philo[i], (t_philo_init){i,
 			dt->time_zero, dt->time_to_die, atoi(argv[3]), atoi(argv[4]),
-			black_hole, &dt->status, &dt->mutex_lstmeal, &dt->mutex_status});
+			black_hole, &dt->status, &dt->mutex_lstmeal[i], &dt->mutex_status});
 	}
 	set_forks(dt);
 	return (0);

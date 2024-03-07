@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mutex_getset.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 10:54:59 by math              #+#    #+#             */
-/*   Updated: 2024/03/06 17:48:27 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/03/07 02:03:58 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,17 @@ int	get_status(t_philo *self)
 	return (ret_val);
 }
 
-void	set_status(t_philo *self, int val)
+int	set_status(t_philo *self, int val)
 {
 	pthread_mutex_lock(self->mutex_status);
+	if (*self->status == val)
+	{
+		pthread_mutex_unlock(self->mutex_status);
+		return (1);
+	}
 	*self->status = val;
 	pthread_mutex_unlock(self->mutex_status);
+	return (0);
 }
 
 void	add_status(t_philo *self, int val)

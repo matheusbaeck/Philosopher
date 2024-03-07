@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/06 19:20:04 by math             ###   ########.fr       */
+/*   Updated: 2024/03/07 02:01:18 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_philo
 typedef struct s_data
 {
 	pthread_mutex_t	*fork;
-	pthread_mutex_t	mutex_lstmeal;
+	pthread_mutex_t	*mutex_lstmeal;
 	pthread_mutex_t	mutex_status;
 	pthread_t		*routine;
 	t_philo			*philo;
@@ -91,7 +91,7 @@ void		*philo_loop(void *philo);
 long int	get_last_meal(t_philo *self);
 int			get_status(t_philo *self);
 void		set_last_meal(t_philo *self, long int val);
-void		set_status(t_philo *self, int val);
+int			set_status(t_philo *self, int val);
 void		add_status(t_philo *self, int val);
 //ACTIONS
 int			think(t_philo *ph);

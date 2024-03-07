@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:45:26 by math42            #+#    #+#             */
-/*   Updated: 2024/03/07 00:35:10 by math             ###   ########.fr       */
+/*   Updated: 2024/03/07 02:08:56 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,15 @@ int	think(t_philo *ph)
 	return (0);
 }
 
-static int	lock_fork(t_philo *ph)
+static int	lock_fork_one(t_philo *ph, long int last_meal)
 {
-	long int	last_meal;
-
-	last_meal = get_last_meal(ph);
 	pthread_mutex_lock(ph->fork[0]);
-	if ((get_time() - last_meal) >= ph->time_to_die || get_status(ph) <= 0)
+	if ((get_time() - last_meal) >= ph->time_to_die)
+	{
+		if (!set_status(ph, -1))
+			printf("%ld\t%d is DEAD\n", get_print_time(ph), ph->name);
+	}
+	if (get_status(ph) <= 0)
 	{
 		pthread_mutex_unlock(ph->fork[0]);
 		return (1);
@@ -37,7 +39,17 @@ static int	lock_fork(t_philo *ph)
 		pthread_mutex_unlock(ph->fork[0]);
 		return (1);
 	}
+	return (0);
+}
+
+static int	lock_fork_two(t_philo *ph, long int last_meal)
+{
 	pthread_mutex_lock(ph->fork[1]);
+	if ((get_time() - last_meal) >= ph->time_to_die)
+	{
+		if (!set_status(ph, -1))
+			printf("%ld\t%d is DEAD\n", get_print_time(ph), ph->name);
+	}
 	if ((get_time() - last_meal) >= ph->time_to_die || get_status(ph) <= 0)
 	{
 		pthread_mutex_unlock(ph->fork[0]);
@@ -45,16 +57,20 @@ static int	lock_fork(t_philo *ph)
 		return (1);
 	}
 	printf("%ld\t\t%d has taken a fork\n", get_print_time(ph), ph->name);
-	return (0);
 }
 
 int	eat(t_philo *ph)
 {
+	long int	last_meal;
+
+	last_meal = get_last_meal(ph);
 	ph->last_act = EAT;
-	if (lock_fork(ph))
+	if (lock_fork_one(ph, last_meal))
 		return (-1);
-	printf("%ld\t\t%d is eating\n", get_print_time(ph), ph->name);
+	if (lock_fork_two(ph, last_meal))
+		return (-1);
 	set_last_meal(ph, get_time() + ph->time_to_eat);
+	printf("%ld\t\t%d is eating\n", get_print_time(ph), ph->name);
 	sleep_ms(ph->time_to_eat);
 	pthread_mutex_unlock(ph->fork[1]);
 	pthread_mutex_unlock(ph->fork[0]);
