@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/03/07 01:40:39 by math             ###   ########.fr       */
+/*   Updated: 2024/03/07 11:20:05 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static void	philo_init(t_philo *self, t_philo_init philo)
 	self->time_to_eat = philo.time_to_eat;
 	self->time_to_sleep = philo.time_to_sleep;
 	self->notepme = philo.notepme;
-	self->mutex_lstmeal = philo.mutex_lstmeal;
-	pthread_mutex_init(self->mutex_lstmeal, NULL);
+	self->mutex_philo_att = philo.mutex_philo_att;
+	pthread_mutex_init(self->mutex_philo_att, NULL);
 	self->mutex_status = philo.mutex_status;
 	self->fork[0] = NULL;
 	self->fork[1] = NULL;
@@ -62,12 +62,12 @@ static int	init_data(t_data *dt, int n_philo, int time_to_die)
 	dt->n_philo = n_philo;
 	dt->time_to_die = time_to_die;
 	dt->fork = (pthread_mutex_t *)malloc(dt->n_philo * sizeof(pthread_mutex_t));
-	dt->mutex_lstmeal = (pthread_mutex_t *)malloc(dt->n_philo * sizeof(pthread_mutex_t));
+	dt->mutex_philo_att = (pthread_mutex_t *)malloc(dt->n_philo * sizeof(pthread_mutex_t));
 	pthread_mutex_init(&dt->mutex_status, NULL);
 	dt->routine = (pthread_t *)malloc(dt->n_philo * sizeof(pthread_t));
 	dt->philo = (t_philo *)malloc(dt->n_philo * sizeof(t_philo));
 	dt->status = dt->n_philo;
-	if (!(dt->fork && dt->routine && dt->philo && dt->mutex_lstmeal))
+	if (!(dt->fork && dt->routine && dt->philo && dt->mutex_philo_att))
 	{
 		printf("Philosopher: memory allocation error!\n");
 		return(1);
@@ -92,11 +92,12 @@ int	init(int argc, char **argv, t_data *dt)
 		if (argc >= 6)
 		{
 			black_hole = atoi(&argv[5][++j]);
+			printf("%d eats %d times\n", i+1, black_hole);
 			j += ft_strlen(&argv[5][j]);
 		}
 		philo_init(&dt->philo[i], (t_philo_init){i,
 			dt->time_zero, dt->time_to_die, atoi(argv[3]), atoi(argv[4]),
-			black_hole, &dt->status, &dt->mutex_lstmeal[i], &dt->mutex_status});
+			black_hole, &dt->status, &dt->mutex_philo_att[i], &dt->mutex_status});
 	}
 	set_forks(dt);
 	return (0);

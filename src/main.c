@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/03/07 00:36:05 by math             ###   ########.fr       */
+/*   Updated: 2024/03/07 11:29:04 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static void	is_there_any_dead(t_data *dt)
 {
 	int	i;
 	long int	last;
+	int			notepme;
 
 	while (1)
 	{
@@ -47,7 +48,8 @@ static void	is_there_any_dead(t_data *dt)
 		while (++i < dt->n_philo)
 		{
 			last = get_last_meal(&dt->philo[i]);
-			if (get_time() - last >= dt->time_to_die)
+			notepme = get_notepme(&dt->philo[i]);
+			if (get_time() - last >= dt->time_to_die && notepme != 0)
 			{
 				printf("%ld\t%d is DEAD\n", get_time() - dt->time_zero, i + 1);
 				set_status(&dt->philo[i], -1);

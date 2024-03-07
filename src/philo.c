@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:42:37 by math42            #+#    #+#             */
-/*   Updated: 2024/03/07 00:35:25 by math             ###   ########.fr       */
+/*   Updated: 2024/03/07 11:12:39 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,18 @@ void	*philo_loop(void *philo)
 			think(ph);
 		else if (ph->last_act == THINK)
 		{
-			if (eat(ph) != 0)
+			switch (eat(ph))
+			{
+			case 1:
 				return (set_status(ph, -1), NULL);
+			
+			case 2:
+				return (add_status(ph, -1), NULL);
+			
+			default:
+				break;
+			}
+			
 		}
 		else if (ph->last_act == EAT)
 			philo_sleep(ph);

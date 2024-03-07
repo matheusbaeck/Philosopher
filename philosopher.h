@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/07 02:01:18 by math             ###   ########.fr       */
+/*   Updated: 2024/03/07 11:31:33 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ typedef struct s_philo_init
 	long int		time_to_sleep;
 	int				notepme;
 	int				*status;
-	pthread_mutex_t	*mutex_lstmeal;
+	pthread_mutex_t	*mutex_philo_att;
 	pthread_mutex_t	*mutex_status;
 }					t_philo_init;
 
 typedef struct s_philo
 {
 	pthread_mutex_t	*fork[2];
-	pthread_mutex_t	*mutex_lstmeal;
+	pthread_mutex_t	*mutex_philo_att;
 	pthread_mutex_t	*mutex_status;
 	long int		time_zero;
 	long int		time_to_die;
@@ -70,7 +70,7 @@ typedef struct s_philo
 typedef struct s_data
 {
 	pthread_mutex_t	*fork;
-	pthread_mutex_t	*mutex_lstmeal;
+	pthread_mutex_t	*mutex_philo_att;
 	pthread_mutex_t	mutex_status;
 	pthread_t		*routine;
 	t_philo			*philo;
@@ -87,10 +87,13 @@ int			check_entry(int argc, char **argv);
 //PHILO
 long int	get_print_time(t_philo *self);
 void		*philo_loop(void *philo);
-//MUTEX_GETSET
+//MUTEX_PHILO_ATT
 long int	get_last_meal(t_philo *self);
-int			get_status(t_philo *self);
 void		set_last_meal(t_philo *self, long int val);
+int			get_notepme(t_philo *self);
+int			add_notepme(t_philo *self, int val);
+//MUTEX_STATUS
+int			get_status(t_philo *self);
 int			set_status(t_philo *self, int val);
 void		add_status(t_philo *self, int val);
 //ACTIONS

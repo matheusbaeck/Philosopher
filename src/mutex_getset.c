@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 10:54:59 by math              #+#    #+#             */
-/*   Updated: 2024/03/07 02:03:58 by math             ###   ########.fr       */
+/*   Updated: 2024/03/07 11:33:20 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,38 @@ long int	get_last_meal(t_philo *self)
 {
 	long int	ret_val;
 
-	pthread_mutex_lock(self->mutex_lstmeal);
+	pthread_mutex_lock(self->mutex_philo_att);
 	ret_val = self->last_meal;
-	pthread_mutex_unlock(self->mutex_lstmeal);
+	pthread_mutex_unlock(self->mutex_philo_att);
 	return (ret_val);
 }
 
 void	set_last_meal(t_philo *self, long int val)
 {
-	pthread_mutex_lock(self->mutex_lstmeal);
+	pthread_mutex_lock(self->mutex_philo_att);
 	self->last_meal = val;
-	pthread_mutex_unlock(self->mutex_lstmeal);
+	pthread_mutex_unlock(self->mutex_philo_att);
+}
+
+int	get_notepme(t_philo *self)
+{
+	int	ret_val;
+
+	pthread_mutex_lock(self->mutex_philo_att);
+	ret_val = self->notepme;
+	pthread_mutex_unlock(self->mutex_philo_att);
+	return (ret_val);
+}
+
+int	add_notepme(t_philo *self, int val)
+{
+	int	ret_val;
+
+	pthread_mutex_lock(self->mutex_philo_att);
+	self->notepme += val;
+	ret_val = self->notepme;
+	pthread_mutex_unlock(self->mutex_philo_att);
+	return (ret_val);
 }
 
 int	get_status(t_philo *self)
