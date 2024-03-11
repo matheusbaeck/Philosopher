@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/03/07 11:29:04 by math             ###   ########.fr       */
+/*   Updated: 2024/03/07 11:40:47 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ static void	free_data(t_data *dt)
 			pthread_mutex_destroy(&dt->fork[i]);
 		free(dt->fork);
 		dt->fork = NULL;
+	}
+	if (dt->mutex_philo_att)
+	{
+		i = -1;
+		while (++i < dt->n_philo)
+			pthread_mutex_destroy(&dt->mutex_philo_att[i]);
+		free(dt->mutex_philo_att);
+		dt->mutex_philo_att = NULL;
 	}
 	if (dt->routine)
 	{

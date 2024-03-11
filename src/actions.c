@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:45:26 by math42            #+#    #+#             */
-/*   Updated: 2024/03/07 11:32:13 by math             ###   ########.fr       */
+/*   Updated: 2024/03/08 16:36:16 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,12 @@ int	think(t_philo *ph)
 
 static int	lock_fork_one(t_philo *ph, long int last_meal)
 {
-	(void)last_meal;
 	pthread_mutex_lock(ph->fork[0]);
-	// if ((get_time() - last_meal) >= ph->time_to_die)
-	// {
-	// 	if (!set_status(ph, -1))
-	// 		printf("%ld\t%d is DEAD\n", get_print_time(ph), ph->name);
-	// }
+	if ((get_time() - last_meal) >= ph->time_to_die)
+	{
+		if (!set_status(ph, -1))
+			printf("%ld\t%d is DEAD\n", get_print_time(ph), ph->name);
+	}
 	if (get_status(ph) <= 0)
 	{
 		pthread_mutex_unlock(ph->fork[0]);
@@ -45,13 +44,12 @@ static int	lock_fork_one(t_philo *ph, long int last_meal)
 
 static int	lock_fork_two(t_philo *ph, long int last_meal)
 {
-	(void)last_meal;
 	pthread_mutex_lock(ph->fork[1]);
-	// if ((get_time() - last_meal) >= ph->time_to_die)
-	// {
-	// 	if (!set_status(ph, -1))
-	// 		printf("%ld\t%d is DEAD\n", get_print_time(ph), ph->name);
-	// }
+	if ((get_time() - last_meal) >= ph->time_to_die)
+	{
+		if (!set_status(ph, -1))
+			printf("%ld\t%d is DEAD\n", get_print_time(ph), ph->name);
+	}
 	if ((get_time() - last_meal) >= ph->time_to_die || get_status(ph) <= 0)
 	{
 		pthread_mutex_unlock(ph->fork[0]);

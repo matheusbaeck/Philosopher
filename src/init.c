@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/03/07 11:20:05 by math             ###   ########.fr       */
+/*   Updated: 2024/03/08 17:03:00 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,14 @@ static void	set_forks(t_data *dt)
 	i = -1;
 	while (++i < dt->n_philo)
 	{
+		printf("fork: %p\n", &dt->fork[i]);
 		if (pthread_mutex_init(&dt->fork[i], NULL))
 			printf("fork %d fail at %p\n", i, &dt->fork[i]);
 	}
 	i = -1;
 	while (++ i < dt->n_philo)
 	{
-		if (i % 2 == 0)
+		if (i % 2 == 0 || dt->n_philo % 2 == 1)
 		{
 			dt->philo[i].fork[0] = &dt->fork[((i + dt->n_philo) % dt->n_philo)];
 			dt->philo[i].fork[1] = &dt->fork[((i + dt->n_philo + 1) % dt->n_philo)];
