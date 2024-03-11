@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/03/08 17:03:00 by math             ###   ########.fr       */
+/*   Updated: 2024/03/11 18:41:21 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	init(int argc, char **argv, t_data *dt)
 	int	j;
 	int	black_hole;
 
-	if (init_data(dt, atoi(argv[1]), atoi(argv[2])))
+	if (init_data(dt, ft_atoi(argv[1]), ft_atoi(argv[2])))
 		return (free(dt), 1);
 	i = -1;
 	j = -1;
@@ -92,12 +92,12 @@ int	init(int argc, char **argv, t_data *dt)
 		black_hole = -1;
 		if (argc >= 6)
 		{
-			black_hole = atoi(&argv[5][++j]);
+			black_hole = ft_atoi(&argv[5][++j]);
 			printf("%d eats %d times\n", i+1, black_hole);
 			j += ft_strlen(&argv[5][j]);
 		}
 		philo_init(&dt->philo[i], (t_philo_init){i,
-			dt->time_zero, dt->time_to_die, atoi(argv[3]), atoi(argv[4]),
+			dt->time_zero, dt->time_to_die, ft_atoi(argv[3]), ft_atoi(argv[4]),
 			black_hole, &dt->status, &dt->mutex_philo_att[i], &dt->mutex_status});
 	}
 	set_forks(dt);

@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/07 11:31:33 by math             ###   ########.fr       */
+/*   Updated: 2024/03/11 18:41:21 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <pthread.h>
-#include <stdlib.h> //atoi
+#include <stdlib.h> //ft_atoi
 #include <sys/time.h>
 #include <signal.h>
 
