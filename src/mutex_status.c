@@ -6,11 +6,19 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 10:54:59 by math              #+#    #+#             */
-/*   Updated: 2024/03/07 11:38:42 by math             ###   ########.fr       */
+/*   Updated: 2024/03/11 19:05:47 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosopher.h"
+
+void	print_safe(char *str, t_philo *self)
+{
+	pthread_mutex_lock(self->mutex_status);
+	if (*self->status > 0)
+		printf(str, get_print_time(self), self->name);
+	pthread_mutex_unlock(self->mutex_status);
+}
 
 int	get_status(t_philo *self)
 {

@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:45:26 by math42            #+#    #+#             */
-/*   Updated: 2024/03/08 16:36:16 by math             ###   ########.fr       */
+/*   Updated: 2024/03/11 19:08:34 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	think(t_philo *ph)
 {
 	ph->last_act = THINK;
-	printf("%ld\t\t%d is thinking\n", get_print_time(ph), ph->name);
+	print_safe("%ld\t\t%d is thinking\n", ph);
 	return (0);
 }
 
@@ -32,7 +32,7 @@ static int	lock_fork_one(t_philo *ph, long int last_meal)
 		pthread_mutex_unlock(ph->fork[0]);
 		return (1);
 	}
-	printf("%ld\t\t%d has taken a fork\n", get_print_time(ph), ph->name);
+	print_safe("%ld\t\t%d has taken a fork\n", ph);
 	if (ph->fork[0] == ph->fork[1])
 	{
 		sleep_ms(ph->time_to_die);
@@ -56,7 +56,7 @@ static int	lock_fork_two(t_philo *ph, long int last_meal)
 		pthread_mutex_unlock(ph->fork[1]);
 		return (1);
 	}
-	printf("%ld\t\t%d has taken a fork\n", get_print_time(ph), ph->name);
+	print_safe("%ld\t\t%d has taken a fork\n", ph);
 	return (0);
 }
 
@@ -71,18 +71,18 @@ int	eat(t_philo *ph)
 	if (lock_fork_two(ph, last_meal))
 		return (-1);
 	set_last_meal(ph, get_time() + ph->time_to_eat);
-	printf("%ld\t\t%d is eating\n", get_print_time(ph), ph->name);
+	print_safe("%ld\t\t%d is eating\n", ph);
 	sleep_ms(ph->time_to_eat);
 	pthread_mutex_unlock(ph->fork[1]);
 	pthread_mutex_unlock(ph->fork[0]);
 	if (get_status(ph) > 0)
 	{
-		printf("%ld\t\t%d has droped a fork\n", get_print_time(ph), ph->name);
-		printf("%ld\t\t%d has droped a fork\n", get_print_time(ph), ph->name);
+		print_safe("%ld\t\t%d has droped a fork\n", ph);
+		print_safe("%ld\t\t%d has droped a fork\n", ph);
 	}
 	if (add_notepme(ph, -1) == 0)
 	{
-		printf("%ld\t\t%d finish eating\n", get_print_time(ph), ph->name);
+		print_safe("%ld\t\t%d finish eating\n", ph);
 		return (2);
 	}
 	return (0);
@@ -91,7 +91,7 @@ int	eat(t_philo *ph)
 int	philo_sleep(t_philo	*ph)
 {
 	ph->last_act = SLEEP;
-	printf("%ld\t\t%d is sleeping\n", get_print_time(ph), ph->name);
+	print_safe("%ld\t\t%d is sleeping\n", ph);
 	sleep_ms(ph->time_to_sleep);
 	return (0);
 }

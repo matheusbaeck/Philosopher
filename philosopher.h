@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/11 18:41:21 by math             ###   ########.fr       */
+/*   Updated: 2024/03/11 19:05:34 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int			add_notepme(t_philo *self, int val);
 int			get_status(t_philo *self);
 int			set_status(t_philo *self, int val);
 void		add_status(t_philo *self, int val);
+void		print_safe(char *str, t_philo *self);
 //ACTIONS
 int			think(t_philo *ph);
 int			eat(t_philo *ph);
