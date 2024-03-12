@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/03/11 20:19:26 by math             ###   ########.fr       */
+/*   Updated: 2024/03/12 17:20:46 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,19 @@ static void	set_forks(t_data *dt)
 			printf("fork %d fail at %p\n", i, &dt->fork[i]);
 	}
 	i = -1;
-	while (++ i < dt->n_philo)
+	while (++i < dt->n_philo)
 	{
 		if (i % 2 == 0 || dt->n_philo % 2 == 1)
 		{
 			dt->philo[i].fork[0] = &dt->fork[((i + dt->n_philo) % dt->n_philo)];
-			dt->philo[i].fork[1] = &dt->fork[((i + dt->n_philo + 1) % dt->n_philo)];
+			dt->philo[i].fork[1] = &dt->fork[((i + dt->n_philo + 1)
+					% dt->n_philo)];
 		}
 		else
 		{
 			dt->philo[i].fork[1] = &dt->fork[((i + dt->n_philo) % dt->n_philo)];
-			dt->philo[i].fork[0] = &dt->fork[((i + dt->n_philo + 1) % dt->n_philo)];
+			dt->philo[i].fork[0] = &dt->fork[((i + dt->n_philo + 1)
+					% dt->n_philo)];
 		}
 	}
 }
@@ -62,7 +64,8 @@ static int	init_data(t_data *dt, int n_philo, int time_to_die)
 	dt->n_philo = n_philo;
 	dt->time_to_die = time_to_die;
 	dt->fork = (pthread_mutex_t *)malloc(dt->n_philo * sizeof(pthread_mutex_t));
-	dt->mutex_philo_att = (pthread_mutex_t *)malloc(dt->n_philo * sizeof(pthread_mutex_t));
+	dt->mutex_philo_att = (pthread_mutex_t *)malloc(dt->n_philo
+			* sizeof(pthread_mutex_t));
 	pthread_mutex_init(&dt->mutex_status, NULL);
 	dt->routine = (pthread_t *)malloc(dt->n_philo * sizeof(pthread_t));
 	dt->philo = (t_philo *)malloc(dt->n_philo * sizeof(t_philo));
@@ -70,7 +73,7 @@ static int	init_data(t_data *dt, int n_philo, int time_to_die)
 	if (!(dt->fork && dt->routine && dt->philo && dt->mutex_philo_att))
 	{
 		printf("Philosopher: memory allocation error!\n");
-		return(1);
+		return (1);
 	}
 	dt->time_zero = get_time();
 	return (0);
@@ -89,9 +92,9 @@ int	init(int argc, char **argv, t_data *dt)
 	i = -1;
 	while (++i < dt->n_philo)
 	{
-		philo_init(&dt->philo[i], (t_philo_init){i,
-			dt->time_zero, dt->time_to_die, ft_atoi(argv[3]), ft_atoi(argv[4]),
-			black_hole, &dt->status, &dt->mutex_philo_att[i], &dt->mutex_status});
+		philo_init(&dt->philo[i], (t_philo_init){i, dt->time_zero,
+			dt->time_to_die, ft_atoi(argv[3]), ft_atoi(argv[4]), black_hole,
+			&dt->status, &dt->mutex_philo_att[i], &dt->mutex_status});
 	}
 	set_forks(dt);
 	return (0);

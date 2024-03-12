@@ -3,35 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/11 19:05:34 by math             ###   ########.fr       */
+/*   Updated: 2024/03/12 17:20:15 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHER_H
 # define PHILOSOPHER_H
 
-#include <string.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <pthread.h>
-#include <stdlib.h> //ft_atoi
-#include <sys/time.h>
-#include <signal.h>
+# include <pthread.h>
+# include <signal.h>
+# include <stdio.h>
+# include <stdlib.h> //ft_atoi
+# include <string.h>
+# include <sys/time.h>
+# include <unistd.h>
 
 // #define	T_LOCK 50;
 // #define T_UNLOCK 10;
 
-enum	e_action
+enum				e_action
 {
 	THINK = 42,
 	EAT = 21,
 	SLEEP = 84,
 };
 
-enum	e_status
+enum				e_status
 {
 	DEAD = -42,
 	FINISH = 420,
@@ -65,7 +65,7 @@ typedef struct s_philo
 	int				phid;
 	int				name;
 	int				*status;
-}	t_philo;
+}					t_philo;
 
 typedef struct s_data
 {
@@ -81,32 +81,32 @@ typedef struct s_data
 }					t_data;
 
 //INIT
-int	init(int argc, char **argv, t_data *dt);
+int					init(int argc, char **argv, t_data *dt);
 //PARSING
-int			check_entry(int argc, char **argv);
+int					check_entry(int argc, char **argv);
 //PHILO
-long int	get_print_time(t_philo *self);
-void		*philo_loop(void *philo);
+long int			get_print_time(t_philo *self);
+void				*philo_loop(void *philo);
 //MUTEX_PHILO_ATT
-long int	get_last_meal(t_philo *self);
-void		set_last_meal(t_philo *self, long int val);
-int			get_notepme(t_philo *self);
-int			add_notepme(t_philo *self, int val);
+long int			get_last_meal(t_philo *self);
+void				set_last_meal(t_philo *self, long int val);
+int					get_notepme(t_philo *self);
+int					add_notepme(t_philo *self, int val);
 //MUTEX_STATUS
-int			get_status(t_philo *self);
-int			set_status(t_philo *self, int val);
-void		add_status(t_philo *self, int val);
-void		print_safe(char *str, t_philo *self);
+int					get_status(t_philo *self);
+int					set_status(t_philo *self, int val);
+void				add_status(t_philo *self, int val);
+void				print_safe(char *str, t_philo *self);
 //ACTIONS
-int			think(t_philo *ph);
-int			eat(t_philo *ph);
-int			philo_sleep(t_philo *ph);
+int					think(t_philo *ph);
+int					eat(t_philo *ph);
+int					philo_sleep(t_philo *ph);
 //UTILS
-int			sleep_ms(int mseconds);
-long int	get_time(void);
-int			ft_strlen(const char *s);
-int			ft_isdigit(int c);
-int 		is_alldigit(char *str);
-int			ft_atoi(const char *str);
+int					sleep_ms(int mseconds);
+long int			get_time(void);
+int					ft_strlen(const char *s);
+int					ft_isdigit(int c);
+int					is_alldigit(char *str);
+int					ft_atoi(const char *str);
 
 #endif

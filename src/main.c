@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/03/07 11:40:47 by math             ###   ########.fr       */
+/*   Updated: 2024/03/12 17:20:55 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosopher.h"
+
+static void	free_aux(t_data *dt)
+{
+	if (dt->routine)
+	{
+		free(dt->routine);
+		dt->routine = NULL;
+	}
+	if (dt->philo)
+	{
+		free(dt->philo);
+		dt->philo = NULL;
+	}
+}
 
 static void	free_data(t_data *dt)
 {
@@ -32,21 +46,12 @@ static void	free_data(t_data *dt)
 		free(dt->mutex_philo_att);
 		dt->mutex_philo_att = NULL;
 	}
-	if (dt->routine)
-	{
-		free(dt->routine);
-		dt->routine = NULL;
-	}
-	if (dt->philo)
-	{
-		free(dt->philo);
-		dt->philo = NULL;
-	}
+	free_aux(dt);
 }
 
 static void	is_there_any_dead(t_data *dt)
 {
-	int	i;
+	int			i;
 	long int	last;
 	int			notepme;
 
@@ -74,7 +79,7 @@ int	main(int argc, char **argv)
 {
 	t_data	dt;
 	int		i;
-	
+
 	if (check_entry(argc, argv))
 		return (1);
 	if (init(argc, argv, &dt))

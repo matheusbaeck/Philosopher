@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: math <math@student.42.fr>                  +#+  +:+       +#+         #
+#    By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/30 15:06:36 by math42            #+#    #+#              #
-#    Updated: 2024/03/11 20:20:16 by math             ###   ########.fr        #
+#    Updated: 2024/03/12 17:20:24 by mamagalh@st      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
-#CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=thread
+#CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror#-g3 -fsanitize=thread
 
 SRC_DIR = src
 OBJ_DIR = .obj

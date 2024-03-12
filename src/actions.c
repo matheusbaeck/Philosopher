@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:45:26 by math42            #+#    #+#             */
-/*   Updated: 2024/03/11 19:08:34 by math             ###   ########.fr       */
+/*   Updated: 2024/03/12 17:20:36 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,10 @@ int	eat(t_philo *ph)
 	return (0);
 }
 
-int	philo_sleep(t_philo	*ph)
+int	philo_sleep(t_philo *ph)
 {
 	ph->last_act = SLEEP;
 	print_safe("%ld\t\t%d is sleeping\n", ph);
 	sleep_ms(ph->time_to_sleep);
 	return (0);
 }
-
