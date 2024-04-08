@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/03/12 17:20:15 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/08 18:28:09 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,10 @@ int					check_entry(int argc, char **argv);
 long int			get_print_time(t_philo *self);
 void				*philo_loop(void *philo);
 //MUTEX_PHILO_ATT
-long int			get_last_meal(t_philo *self);
-void				set_last_meal(t_philo *self, long int val);
-int					get_notepme(t_philo *self);
-int					add_notepme(t_philo *self, int val);
+long int	get_last_meal(t_philo *self);
+int			set_last_meal(t_philo *self, long int val);
+int			get_notepme(t_philo *self);
+int			add_notepme(t_philo *self, int val);
 //MUTEX_STATUS
 int					get_status(t_philo *self);
 int					set_status(t_philo *self, int val);

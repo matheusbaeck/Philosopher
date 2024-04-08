@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:45:26 by math42            #+#    #+#             */
-/*   Updated: 2024/03/12 17:20:36 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/08 19:01:18 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ int	eat(t_philo *ph)
 		return (-1);
 	if (lock_fork_two(ph, last_meal))
 		return (-1);
-	set_last_meal(ph, get_time() + ph->time_to_eat);
+	if (set_last_meal(ph, get_time()))
+		return (-1);
 	print_safe("%ld\t\t%d is eating\n", ph);
 	sleep_ms(ph->time_to_eat);
 	pthread_mutex_unlock(ph->fork[1]);
