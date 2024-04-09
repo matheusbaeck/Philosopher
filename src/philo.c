@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:42:37 by math42            #+#    #+#             */
-/*   Updated: 2024/04/09 10:07:12 by math             ###   ########.fr       */
+/*   Updated: 2024/04/09 15:44:19 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,19 @@ long int	get_print_time(t_philo *self)
 
 void	*philo_loop(void *philo)
 {
-	t_philo	*ph;
-	int		ret;
+	t_philo		*ph;
 
 	ph = ((t_philo *)philo);
 	while (get_status(ph) > 0)
 	{
-		if (ph->last_act == SLEEP)
-			think(ph);
-		else if (ph->last_act == THINK)
-		{
-			ret = eat(ph);
-			if (ret == 1)
-				return (set_status(ph, -1), NULL);
-			else if (ret == 2)
-				return (add_status(ph, -1), NULL);
-		}
-		else if (ph->last_act == EAT)
-			philo_sleep(ph);
+		think(ph);
+		if (get_status(ph) <= 0)
+			break;
+		if (eat(ph))
+			return (NULL);
+		if (get_status(ph) <= 0)
+			break;
+		philo_sleep(ph);
 	}
-	return (set_status(ph, -1), NULL);
+	return (NULL);
 }

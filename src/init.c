@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/03/12 17:20:46 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/09 15:18:55 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ static void	philo_init(t_philo *self, t_philo_init philo)
 	self->mutex_philo_att = philo.mutex_philo_att;
 	pthread_mutex_init(self->mutex_philo_att, NULL);
 	self->mutex_status = philo.mutex_status;
+	self->mutex_print = philo.mutex_print;
 	self->fork[0] = NULL;
 	self->fork[1] = NULL;
 	self->status = philo.status;
-	self->last_act = SLEEP;
 	self->phid = philo.phid;
 	self->name = philo.phid + 1;
 	self->last_meal = philo.time_zero;
@@ -67,6 +67,7 @@ static int	init_data(t_data *dt, int n_philo, int time_to_die)
 	dt->mutex_philo_att = (pthread_mutex_t *)malloc(dt->n_philo
 			* sizeof(pthread_mutex_t));
 	pthread_mutex_init(&dt->mutex_status, NULL);
+	pthread_mutex_init(&dt->mutex_print, NULL);
 	dt->routine = (pthread_t *)malloc(dt->n_philo * sizeof(pthread_t));
 	dt->philo = (t_philo *)malloc(dt->n_philo * sizeof(t_philo));
 	dt->status = dt->n_philo;
@@ -82,19 +83,19 @@ static int	init_data(t_data *dt, int n_philo, int time_to_die)
 int	init(int argc, char **argv, t_data *dt)
 {
 	int	i;
-	int	black_hole;
+	int	notepme;
 
 	if (init_data(dt, ft_atoi(argv[1]), ft_atoi(argv[2])))
 		return (free(dt), 1);
-	black_hole = -1;
+	notepme = -1;
 	if (argc >= 6)
-		black_hole = ft_atoi(argv[5]);
+		notepme = ft_atoi(argv[5]);
 	i = -1;
 	while (++i < dt->n_philo)
 	{
 		philo_init(&dt->philo[i], (t_philo_init){i, dt->time_zero,
-			dt->time_to_die, ft_atoi(argv[3]), ft_atoi(argv[4]), black_hole,
-			&dt->status, &dt->mutex_philo_att[i], &dt->mutex_status});
+			dt->time_to_die, ft_atoi(argv[3]), ft_atoi(argv[4]), notepme,
+			&dt->status, &dt->mutex_philo_att[i], &dt->mutex_status, &dt->mutex_print});
 	}
 	set_forks(dt);
 	return (0);

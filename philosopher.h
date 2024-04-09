@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/08 18:28:09 by math             ###   ########.fr       */
+/*   Updated: 2024/04/09 13:44:15 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_philo_init
 	int				*status;
 	pthread_mutex_t	*mutex_philo_att;
 	pthread_mutex_t	*mutex_status;
+	pthread_mutex_t	*mutex_print;
 }					t_philo_init;
 
 typedef struct s_philo
@@ -55,13 +56,13 @@ typedef struct s_philo
 	pthread_mutex_t	*fork[2];
 	pthread_mutex_t	*mutex_philo_att;
 	pthread_mutex_t	*mutex_status;
+	pthread_mutex_t	*mutex_print;
 	long int		time_zero;
 	long int		time_to_die;
 	long int		time_to_eat;
 	long int		time_to_sleep;
 	long int		last_meal;
 	int				notepme;
-	int				last_act;
 	int				phid;
 	int				name;
 	int				*status;
@@ -72,6 +73,7 @@ typedef struct s_data
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	*mutex_philo_att;
 	pthread_mutex_t	mutex_status;
+	pthread_mutex_t	mutex_print;
 	pthread_t		*routine;
 	t_philo			*philo;
 	long int		time_zero;
