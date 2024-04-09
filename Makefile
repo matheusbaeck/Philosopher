@@ -6,7 +6,7 @@
 #    By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/30 15:06:36 by math42            #+#    #+#              #
-#    Updated: 2024/04/09 11:59:23 by mamagalh@st      ###   ########.fr        #
+#    Updated: 2024/04/09 18:42:53 by mamagalh@st      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,15 @@ CFLAGS = -Wall -Wextra -Werror #-g3 -fsanitize=thread
 SRC_DIR = src
 OBJ_DIR = .obj
 
-SRCS = $(wildcard $(SRC_DIR)/*.c)
+SRCS =	src/actions.c \
+		src/init.c \
+		src/main.c \
+		src/mutex_philo_att.c \
+		src/mutex_status.c \
+		src/parsing.c \
+		src/philo.c \
+		src/utils.c
+
 OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
 NAME = philo
