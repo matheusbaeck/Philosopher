@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:42:37 by math42            #+#    #+#             */
-/*   Updated: 2024/03/12 17:26:32 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/09 10:07:12 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	*philo_loop(void *philo)
 				return (set_status(ph, -1), NULL);
 			else if (ret == 2)
 				return (add_status(ph, -1), NULL);
-			else
-				continue ;
 		}
 		else if (ph->last_act == EAT)
 			philo_sleep(ph);
