@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/09 18:37:05 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/09 20:12:10 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_philo_init
 	int				*status;
 	pthread_mutex_t	*mutex_philo_att;
 	pthread_mutex_t	*mutex_status;
-	pthread_mutex_t	*mutex_print;
 }					t_philo_init;
 
 typedef struct s_philo
@@ -56,7 +55,6 @@ typedef struct s_philo
 	pthread_mutex_t	*fork[2];
 	pthread_mutex_t	*mutex_philo_att;
 	pthread_mutex_t	*mutex_status;
-	pthread_mutex_t	*mutex_print;
 	long int		time_zero;
 	long int		time_to_die;
 	long int		time_to_eat;

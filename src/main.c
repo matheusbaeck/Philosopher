@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/04/09 18:30:36 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/09 20:08:16 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	is_there_any_dead(t_data *dt)
 	int			notepme;
 	int			count_notepme;
 
-	while (1)
+	while (!sleep_ms(5))
 	{
 		i = -1;
 		count_notepme = 0;

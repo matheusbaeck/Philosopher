@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/04/09 18:30:13 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/09 20:11:58 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void	philo_init(t_philo *self, t_philo_init philo)
 	self->mutex_philo_att = philo.mutex_philo_att;
 	pthread_mutex_init(self->mutex_philo_att, NULL);
 	self->mutex_status = philo.mutex_status;
-	self->mutex_print = philo.mutex_print;
 	self->fork[0] = NULL;
 	self->fork[1] = NULL;
 	self->status = philo.status;
@@ -96,7 +95,7 @@ int	init(int argc, char **argv, t_data *dt)
 		philo_init(&dt->philo[i], (t_philo_init){i, dt->time_zero,
 			dt->time_to_die, ft_atoi(argv[3]), ft_atoi(argv[4]),
 			notepme, &dt->status, &dt->mutex_philo_att[i],
-			&dt->mutex_status, &dt->mutex_print});
+			&dt->mutex_status});
 	}
 	set_forks(dt);
 	return (0);

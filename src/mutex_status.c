@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mutex_status.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 10:54:59 by math              #+#    #+#             */
-/*   Updated: 2024/04/09 13:42:29 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/09 20:05:11 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	print_safe(char *str, t_philo *self)
 {
-	pthread_mutex_lock(self->mutex_print);
+	pthread_mutex_lock(self->mutex_status);
 	if (*self->status > 0)
 		printf(str, get_print_time(self), self->name);
-	pthread_mutex_unlock(self->mutex_print);
+	pthread_mutex_unlock(self->mutex_status);
 }
 
 int	get_status(t_philo *self)
