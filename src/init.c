@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/04/09 17:59:17 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/09 18:30:13 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,9 @@ int	init(int argc, char **argv, t_data *dt)
 	while (++i < dt->n_philo)
 	{
 		philo_init(&dt->philo[i], (t_philo_init){i, dt->time_zero,
-			dt->time_to_die, ft_atoi(argv[3]), ft_atoi(argv[4]), notepme,
-			&dt->status, &dt->mutex_philo_att[i], &dt->mutex_status, &dt->mutex_print});
+			dt->time_to_die, ft_atoi(argv[3]), ft_atoi(argv[4]),
+			notepme, &dt->status, &dt->mutex_philo_att[i],
+			&dt->mutex_status, &dt->mutex_print});
 	}
 	set_forks(dt);
 	return (0);

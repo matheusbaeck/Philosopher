@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:12:41 by math42            #+#    #+#             */
-/*   Updated: 2024/04/09 17:01:13 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/09 18:35:28 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 int	sleep_ms(int mseconds)
 {
-   long time;
-   
-   time = get_time();
-   while(get_time() - time < mseconds);
-   return 0;
+	long int	time;
+
+	time = get_time();
+	while (get_time() - time < mseconds)
+		;
+	return (0);
 }
+
 long int	get_time(void)
 {
 	struct timeval	tv;

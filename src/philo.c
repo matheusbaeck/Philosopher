@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:42:37 by math42            #+#    #+#             */
-/*   Updated: 2024/04/09 17:25:31 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/09 18:30:57 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,8 @@ void	*philo_loop(void *philo)
 	while (get_status(ph) > 0)
 	{
 		think(ph);
-		// if (get_status(ph) <= 0)
-		// 	break;
 		if (eat(ph))
 			return (NULL);
-		// if (get_status(ph) <= 0)
-		// 	break;
 		philo_sleep(ph);
 	}
 	return (NULL);

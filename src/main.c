@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/04/09 18:02:46 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/09 18:30:36 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ static void	is_there_any_dead(t_data *dt)
 		}
 		if (count_notepme == dt->n_philo)
 			return ;
-		usleep(25 * dt->n_philo);
 	}
 }
 

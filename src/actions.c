@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:45:26 by math42            #+#    #+#             */
-/*   Updated: 2024/04/09 18:04:32 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/09 18:28:51 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	think(t_philo *ph)
 {
-	(void)ph;
 	print_safe("%ld\t\t%d is thinking\n", ph);
 	return (0);
 }
@@ -39,7 +38,8 @@ int	eat(t_philo *ph)
 	if (lock_fork(ph))
 		return (-1);
 	if (set_last_meal(ph, get_time()))
-		return (pthread_mutex_unlock(ph->fork[0]), pthread_mutex_unlock(ph->fork[1]), -1); 
+		return (pthread_mutex_unlock(ph->fork[0]),
+			pthread_mutex_unlock(ph->fork[1]), -1);
 	print_safe("%ld\t\t%d is eating\n", ph);
 	sleep_ms(ph->time_to_eat);
 	pthread_mutex_unlock(ph->fork[0]);
