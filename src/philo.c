@@ -6,11 +6,12 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:42:37 by math42            #+#    #+#             */
-/*   Updated: 2024/04/10 18:37:09 by math             ###   ########.fr       */
+/*   Updated: 2024/04/10 18:45:43 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philosopher.h"
+#include "philosopher.h"
+
 
 
 static void philo_sync(t_philo *ph)

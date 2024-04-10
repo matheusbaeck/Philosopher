@@ -6,11 +6,12 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 10:54:59 by math              #+#    #+#             */
-/*   Updated: 2024/04/10 14:17:30 by math             ###   ########.fr       */
+/*   Updated: 2024/04/10 18:45:43 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philosopher.h"
+#include "philosopher.h"
+
 
 int	print_safe(char *str, t_philo *self)
 {

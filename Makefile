@@ -6,13 +6,13 @@
 #    By: math <math@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/30 15:06:36 by math42            #+#    #+#              #
-#    Updated: 2024/04/10 18:28:22 by math             ###   ########.fr        #
+#    Updated: 2024/04/10 18:46:14 by math             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-#CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
-CFLAGS = -Wall -Wextra -Werror #-g3 -fsanitize=thread
+#CFLAGS = -Wall -Wextra -Werror -I. -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -I. #-g3 -fsanitize=thread
 
 SRC_DIR = src
 OBJ_DIR = .obj

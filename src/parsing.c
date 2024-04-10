@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:54:18 by math              #+#    #+#             */
-/*   Updated: 2024/03/12 17:21:23 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/10 18:45:43 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philosopher.h"
+#include "philosopher.h"
+
 
 int	ft_strlen(const char *s)
 {

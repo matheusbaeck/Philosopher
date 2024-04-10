@@ -6,11 +6,12 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:37:55 by math              #+#    #+#             */
-/*   Updated: 2024/04/10 13:06:39 by math             ###   ########.fr       */
+/*   Updated: 2024/04/10 18:45:43 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philosopher.h"
+#include "philosopher.h"
+
 
 long int	get_last_meal(t_philo *self)
 {

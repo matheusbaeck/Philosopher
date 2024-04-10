@@ -6,11 +6,12 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/04/10 18:07:55 by math             ###   ########.fr       */
+/*   Updated: 2024/04/10 18:45:43 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philosopher.h"
+#include "philosopher.h"
+
 
 static void	is_there_any_dead(t_data *dt)
 {
