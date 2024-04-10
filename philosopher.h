@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/10 18:21:27 by math             ###   ########.fr       */
+/*   Updated: 2024/04/10 20:01:03 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,11 @@
 # define PHILOSOPHER_H
 
 # include <pthread.h>
-# include <signal.h>
 # include <stdio.h>
-# include <stdlib.h> //ft_atoi
+# include <stdlib.h> //malloc
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
-
-// #define	T_LOCK 50;
-// #define T_UNLOCK 10;
 
 enum				e_action
 {
