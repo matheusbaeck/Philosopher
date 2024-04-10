@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+         #
+#    By: math <math@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/30 15:06:36 by math42            #+#    #+#              #
-#    Updated: 2024/04/09 18:42:53 by mamagalh@st      ###   ########.fr        #
+#    Updated: 2024/04/10 18:28:22 by math             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRCS =	src/actions.c \
 		src/mutex_status.c \
 		src/parsing.c \
 		src/philo.c \
-		src/utils.c
+		src/time.c \
+		src/cleaning.c
 
 OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 

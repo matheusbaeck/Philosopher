@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/09 20:12:10 by math             ###   ########.fr       */
+/*   Updated: 2024/04/10 18:21:27 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 enum				e_action
 {
 	THINK = 42,
+	FORK_ONE = 11,
+	FORK_TWO = 22,
 	EAT = 21,
 	SLEEP = 84,
 };
@@ -64,6 +66,7 @@ typedef struct s_philo
 	int				phid;
 	int				name;
 	int				*status;
+	int				last_act;
 }					t_philo;
 
 typedef struct s_data
@@ -71,7 +74,6 @@ typedef struct s_data
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	*mutex_philo_att;
 	pthread_mutex_t	mutex_status;
-	pthread_mutex_t	mutex_print;
 	pthread_t		*routine;
 	t_philo			*philo;
 	long int		time_zero;
@@ -93,12 +95,14 @@ int					set_last_meal(t_philo *self, long int val);
 int					get_notepme(t_philo *self);
 int					add_notepme(t_philo *self, int val);
 //MUTEX_STATUS
+int					print_safe(char *str, t_philo *self);
 int					get_status(t_philo *self);
 int					set_status(t_philo *self, int val);
 void				add_status(t_philo *self, int val);
-void				print_safe(char *str, t_philo *self);
 //ACTIONS
 int					think(t_philo *ph);
+int					lock_fork_one(t_philo *ph);
+int					lock_fork_two(t_philo *ph);
 int					eat(t_philo *ph);
 int					philo_sleep(t_philo *ph);
 //UTILS
@@ -108,5 +112,9 @@ int					ft_strlen(const char *s);
 int					ft_isdigit(int c);
 int					is_alldigit(char *str);
 int					ft_atoi(const char *str);
+//CLEANING
+void				destroy_mutex_array(pthread_mutex_t *arr, int size);
+void				destroy_mutex(t_data *dt);
+void				free_data(t_data *dt);
 
 #endif

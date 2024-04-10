@@ -6,48 +6,11 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/04/10 13:00:15 by math             ###   ########.fr       */
+/*   Updated: 2024/04/10 18:07:55 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosopher.h"
-
-static void	free_aux(t_data *dt)
-{
-	if (dt->routine)
-	{
-		free(dt->routine);
-		dt->routine = NULL;
-	}
-	if (dt->philo)
-	{
-		free(dt->philo);
-		dt->philo = NULL;
-	}
-}
-
-static void	free_data(t_data *dt)
-{
-	int	i;
-
-	if (dt->fork)
-	{
-		i = -1;
-		while (++i < dt->n_philo)
-			pthread_mutex_destroy(&dt->fork[i]);
-		free(dt->fork);
-		dt->fork = NULL;
-	}
-	if (dt->mutex_philo_att)
-	{
-		i = -1;
-		while (++i < dt->n_philo)
-			pthread_mutex_destroy(&dt->mutex_philo_att[i]);
-		free(dt->mutex_philo_att);
-		dt->mutex_philo_att = NULL;
-	}
-	free_aux(dt);
-}
 
 static void	is_there_any_dead(t_data *dt)
 {
@@ -58,9 +21,9 @@ static void	is_there_any_dead(t_data *dt)
 	int			count_notepme;
 
 	time = get_time();
-	while (!sleep_ms(9))
+	while (1)
 	{
-		while (get_time() - time < 5)
+		while (get_time() - time < 1)
 			;
 		i = -1;
 		count_notepme = 0;
@@ -102,6 +65,7 @@ int	main(int argc, char **argv)
 	i = -1;
 	while (++i < dt.n_philo)
 		pthread_join(dt.routine[i], NULL);
+	destroy_mutex(&dt);
 	free_data(&dt);
 	return (0);
 }

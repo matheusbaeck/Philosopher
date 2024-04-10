@@ -6,35 +6,41 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:42:37 by math42            #+#    #+#             */
-/*   Updated: 2024/04/10 13:19:00 by math             ###   ########.fr       */
+/*   Updated: 2024/04/10 18:37:09 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosopher.h"
 
-long int	get_print_time(t_philo *self)
+
+static void philo_sync(t_philo *ph)
 {
-	return (get_time() - self->time_zero);
+	while (get_time() != ph->time_zero)
+		;
+	if (ph->phid % 2 == 0)
+		usleep(100);
 }
 
 void	*philo_loop(void *philo)
 {
 	t_philo		*ph;
-	bool		dead;
+	int			alive;
 
 	ph = ((t_philo *)philo);
-	while (get_time() != ph->time_zero)
-		;
-	if (ph->phid % 2 == 0)
-		usleep(100);
-	dead = 0;
-	while (get_status(ph) > 0)
+	philo_sync(ph);
+	alive = 1;
+	while (alive)
 	{
-		think(ph);
-		if (eat(ph))
-			return (NULL);
-		philo_sleep(ph);
+		if (ph->last_act == SLEEP)
+			alive = think(ph);
+		else if (ph->last_act == THINK)
+			alive = lock_fork_one(ph);
+		else if (ph->last_act == FORK_ONE)
+			alive = lock_fork_two(ph);
+		else if (ph->last_act == FORK_TWO)
+			alive = eat(ph);
+		else if (ph->last_act == EAT)
+			alive = philo_sleep(ph);
 	}
-	printf("JUST WAITING TO BE KILD ##############################################\n");
 	return (NULL);
 }
