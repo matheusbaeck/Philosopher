@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:37:55 by math              #+#    #+#             */
-/*   Updated: 2024/04/08 18:29:11 by math             ###   ########.fr       */
+/*   Updated: 2024/04/10 13:06:39 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ long int	get_last_meal(t_philo *self)
 int	set_last_meal(t_philo *self, long int val)
 {
 	pthread_mutex_lock(self->mutex_philo_att);
-	if (get_status(self) == -1)
-		return (-1);
+	if ((get_time() - self->last_meal) > self->time_to_die
+		|| get_status(self) == -1)
+		return (pthread_mutex_unlock(self->mutex_philo_att), -1);
 	self->last_meal = val;
 	pthread_mutex_unlock(self->mutex_philo_att);
 	return (0);

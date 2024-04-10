@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/04/09 20:08:16 by math             ###   ########.fr       */
+/*   Updated: 2024/04/10 13:00:15 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,15 @@ static void	is_there_any_dead(t_data *dt)
 {
 	int			i;
 	long int	last;
+	long int	time;
 	int			notepme;
 	int			count_notepme;
 
-	while (!sleep_ms(5))
+	time = get_time();
+	while (!sleep_ms(9))
 	{
+		while (get_time() - time < 5)
+			;
 		i = -1;
 		count_notepme = 0;
 		while (++i < dt->n_philo)
@@ -75,6 +79,7 @@ static void	is_there_any_dead(t_data *dt)
 		}
 		if (count_notepme == dt->n_philo)
 			return ;
+		time = get_time();
 	}
 }
 

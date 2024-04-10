@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/04/09 20:11:58 by math             ###   ########.fr       */
+/*   Updated: 2024/04/10 12:55:47 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	init_data(t_data *dt, int n_philo, int time_to_die)
 		printf("Philosopher: memory allocation error!\n");
 		return (1);
 	}
-	dt->time_zero = get_time();
+	dt->time_zero = get_time() + (5 * dt->n_philo);
 	return (0);
 }
 
