@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wait.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:53:04 by math              #+#    #+#             */
-/*   Updated: 2024/04/11 19:53:39 by math             ###   ########.fr       */
+/*   Updated: 2024/04/13 14:49:37 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,4 @@ void	wait_philos(pid_t *pid, int n_philo)
 		if (WEXITSTATUS(status) == 1)
 			return (kill_pid_list(pid, n_philo));
 	}
-	
-
 }

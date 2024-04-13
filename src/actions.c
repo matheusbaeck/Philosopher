@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:45:26 by math42            #+#    #+#             */
-/*   Updated: 2024/04/10 18:45:43 by math             ###   ########.fr       */
+/*   Updated: 2024/04/13 14:50:03 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
-
 
 int	think(t_philo *ph)
 {
@@ -22,7 +21,7 @@ int	think(t_philo *ph)
 int	lock_fork_one(t_philo *ph)
 {
 	int	ret;
-	
+
 	ph->last_act = FORK_ONE;
 	pthread_mutex_lock(ph->fork[0]);
 	ret = print_safe("%ld\t\t%d has taken a fork\n", ph);
@@ -47,7 +46,8 @@ int	eat(t_philo *ph)
 	ph->last_act = EAT;
 	if (set_last_meal(ph, get_time()))
 		return (pthread_mutex_unlock(ph->fork[0]),
-			pthread_mutex_unlock(ph->fork[1]), 0);
+			pthread_mutex_unlock(ph->fork[1]),
+			0);
 	print_safe("%ld\t\t%d is eating\n", ph);
 	sleep_ms(ph->time_to_eat);
 	pthread_mutex_unlock(ph->fork[0]);

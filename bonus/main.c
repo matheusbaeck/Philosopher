@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 19:20:20 by math              #+#    #+#             */
-/*   Updated: 2024/04/12 11:19:50 by math             ###   ########.fr       */
+/*   Updated: 2024/04/13 14:48:04 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	philo_sync(t_philo *ph)
 		usleep(100);
 }
 
-void philo_task(t_philo ph)
+void	philo_task(t_philo ph)
 {
 	ph.name = ph.phid + 1;
 	ph.last_meal = ph.time_zero;
@@ -39,7 +39,7 @@ void	clean(pid_t *pid, sem_t *semaphore)
 int	main(int argc, char **argv)
 {
 	pid_t	*pid;
-	sem_t 	*semaphore;
+	sem_t	*semaphore;
 	int		n_philo;
 
 	if (check_entry(argc, argv))

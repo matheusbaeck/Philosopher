@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:42:37 by math42            #+#    #+#             */
-/*   Updated: 2024/04/10 18:45:43 by math             ###   ########.fr       */
+/*   Updated: 2024/04/13 14:51:24 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-
-
-static void philo_sync(t_philo *ph)
+static void	philo_sync(t_philo *ph)
 {
 	while (get_time() != ph->time_zero)
 		;
@@ -24,8 +22,8 @@ static void philo_sync(t_philo *ph)
 
 void	*philo_loop(void *philo)
 {
-	t_philo		*ph;
-	int			alive;
+	t_philo	*ph;
+	int		alive;
 
 	ph = ((t_philo *)philo);
 	philo_sync(ph);

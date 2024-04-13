@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/04/10 18:45:43 by math             ###   ########.fr       */
+/*   Updated: 2024/04/13 14:50:34 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
-
 
 static void	set_forks(t_data *dt)
 {
@@ -56,7 +55,7 @@ static int	init_mutexes(t_data *dt)
 			pthread_mutex_destroy(&dt->mutex_status);
 			destroy_mutex_array(&dt->fork[i], i);
 			destroy_mutex_array(&dt->mutex_philo_att[i], i - 1);
-			return(printf("Philosopher: failed to init mutex\n"), 1);
+			return (printf("Philosopher: failed to init mutex\n"), 1);
 		}
 	}
 	return (0);
@@ -114,9 +113,8 @@ int	init(int argc, char **argv, t_data *dt)
 	while (++i < dt->n_philo)
 	{
 		philo_init(&dt->philo[i], (t_philo_init){i, dt->time_zero,
-			dt->time_to_die, ft_atoi(argv[3]), ft_atoi(argv[4]),
-			notepme, &dt->status, &dt->mutex_philo_att[i],
-			&dt->mutex_status});
+			dt->time_to_die, ft_atoi(argv[3]), ft_atoi(argv[4]), notepme,
+			&dt->status, &dt->mutex_philo_att[i], &dt->mutex_status});
 	}
 	if (init_mutexes(dt))
 		return (free_data(dt), 1);

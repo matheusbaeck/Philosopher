@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:57:53 by math              #+#    #+#             */
-/*   Updated: 2024/04/12 11:27:28 by math             ###   ########.fr       */
+/*   Updated: 2024/04/13 14:48:45 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ static int	is_alive(t_philo *ph)
 {
 	if (get_time() - ph->last_meal > ph->time_to_die)
 	{
-		printf("%ld\t%d is DEAD\n", get_time() - ph->time_zero
-			, ph->name);
-		exit (1);
+		printf("%ld\t%d is DEAD\n", get_time() - ph->time_zero, ph->name);
+		exit(1);
 	}
 	return (1);
 }
@@ -45,9 +44,9 @@ static void	eat(t_philo *ph)
 	sleep_ms(ph->time_to_eat);
 	sem_post(ph->semaphore);
 	sem_post(ph->semaphore);
-	ph->notepme --;
+	ph->notepme--;
 	if (ph->notepme == 0)
-		exit (0);
+		exit(0);
 	sleep_ms(ph->time_to_sleep);
 }
 

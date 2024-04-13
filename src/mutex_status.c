@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mutex_status.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 10:54:59 by math              #+#    #+#             */
-/*   Updated: 2024/04/10 18:45:43 by math             ###   ########.fr       */
+/*   Updated: 2024/04/13 14:51:08 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
-
 
 int	print_safe(char *str, t_philo *self)
 {

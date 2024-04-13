@@ -3,21 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 19:50:50 by math              #+#    #+#             */
-/*   Updated: 2024/04/12 11:22:13 by math             ###   ########.fr       */
+/*   Updated: 2024/04/13 15:02:21 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bonus.h"
 
-void	init_philo(int argc, char **argv, pid_t *pid, int n_philo, sem_t *semaphore)
+void	init_philo(int argc, char **argv, pid_t *pid, sem_t *semaphore)
 {
 	int			i;
+	int			n_philo;
 	long int	time_zero;
-	t_philo 	ph;
+	t_philo		ph;
 
+	n_philo = ft_atoi(argv[1]);
 	i = -1;
 	time_zero = get_time() + 200;
 	ph.semaphore = semaphore;
