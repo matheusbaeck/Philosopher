@@ -6,11 +6,11 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:12:41 by math42            #+#    #+#             */
-/*   Updated: 2024/04/13 14:51:34 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/13 15:11:28 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "bonus.h"
+#include "philosopher.h"
 
 int	sleep_ms(int mseconds)
 {

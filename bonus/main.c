@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 19:20:20 by math              #+#    #+#             */
-/*   Updated: 2024/04/13 14:48:04 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/13 15:21:09 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	clean(pid_t *pid, sem_t *semaphore)
 {
 	free(pid);
 	pid = NULL;
-	sem_destroy(semaphore);
+	sem_close(semaphore);
+	sem_unlink("forks");
 }
 
 int	main(int argc, char **argv)
@@ -47,7 +48,7 @@ int	main(int argc, char **argv)
 	n_philo = ft_atoi(argv[1]);
 	if (init(&pid, n_philo, &semaphore))
 		return (1);
-	init_philo(argc, argv, pid, n_philo, semaphore);
+	init_philo(argc, argv, pid, semaphore);
 	wait_philos(pid, n_philo);
 	clean(pid, semaphore);
 	return (0);
