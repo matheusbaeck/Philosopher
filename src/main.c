@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/04/13 15:00:16 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/13 15:03:20 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	is_there_any_dead(t_data *dt)
 		count_notepme = 0;
 		while (++i < dt->n_philo)
 		{
-			if (checker(dt, count_notepme, i))
+			if (checker(dt, &count_notepme, i))
 				return ;
 		}
 		if (count_notepme == dt->n_philo)
