@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:45:26 by math42            #+#    #+#             */
-/*   Updated: 2024/04/13 14:50:03 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/14 12:27:31 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,36 @@ int	lock_fork_one(t_philo *ph)
 		pthread_mutex_unlock(ph->fork[0]);
 		return (0);
 	}
+	if (ret == 0)
+	{
+		pthread_mutex_unlock(ph->fork[0]);
+	}
 	return (ret);
 }
 
 int	lock_fork_two(t_philo *ph)
 {
+	int	ret;
 	ph->last_act = FORK_TWO;
 	pthread_mutex_lock(ph->fork[1]);
-	return (print_safe("%ld\t\t%d has taken a fork\n", ph));
+	ret = print_safe("%ld\t\t%d has taken a fork\n", ph);
+	if (ret == 0)
+	{
+		pthread_mutex_unlock(ph->fork[0]);
+		pthread_mutex_unlock(ph->fork[1]);
+	}
+	return (ret);
 }
 
 int	eat(t_philo *ph)
 {
 	ph->last_act = EAT;
-	if (set_last_meal(ph, get_time()))
-		return (pthread_mutex_unlock(ph->fork[0]),
-			pthread_mutex_unlock(ph->fork[1]),
-			0);
+	if (!set_last_meal(ph, get_time()))
+	{
+		pthread_mutex_unlock(ph->fork[0]);
+		pthread_mutex_unlock(ph->fork[1]);
+		return (0);
+	}
 	print_safe("%ld\t\t%d is eating\n", ph);
 	sleep_ms(ph->time_to_eat);
 	pthread_mutex_unlock(ph->fork[0]);

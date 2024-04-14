@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mutex_philo_att.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:37:55 by math              #+#    #+#             */
-/*   Updated: 2024/04/13 14:50:58 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/14 12:27:18 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,11 @@ long int	get_last_meal(t_philo *self)
 int	set_last_meal(t_philo *self, long int val)
 {
 	pthread_mutex_lock(self->mutex_philo_att);
-	if ((get_time() - self->last_meal) > self->time_to_die
-		|| get_status(self) == -1)
-		return (pthread_mutex_unlock(self->mutex_philo_att), -1);
+	if ((get_time() - self->last_meal) > self->time_to_die)
+		return (pthread_mutex_unlock(self->mutex_philo_att), 0);
 	self->last_meal = val;
 	pthread_mutex_unlock(self->mutex_philo_att);
-	return (0);
+	return (1);
 }
 
 int	get_notepme(t_philo *self)

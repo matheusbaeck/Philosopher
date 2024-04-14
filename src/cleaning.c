@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaning.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:49:25 by math              #+#    #+#             */
-/*   Updated: 2024/04/13 14:50:15 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/14 12:43:02 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	free_data(t_data *dt)
 	}
 	if (dt->mutex_philo_att)
 	{
-		free(dt->fork);
+		free(dt->mutex_philo_att);
 		dt->fork = NULL;
 	}
 	if (dt->routine)
