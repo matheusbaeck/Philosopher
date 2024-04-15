@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:42:37 by math42            #+#    #+#             */
-/*   Updated: 2024/04/13 14:51:24 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/16 01:02:16 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ static void	philo_sync(t_philo *ph)
 	while (get_time() != ph->time_zero)
 		;
 	if (ph->phid % 2 == 0)
-		usleep(100);
+		sleep_ms((ph->time_to_eat / 10) * 6);
+	else
+		sleep_ms((((ph->time_to_eat / 10)) / 3) * ph->phid);
 }
 
 void	*philo_loop(void *philo)
