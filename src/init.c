@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/04/13 14:50:34 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/16 15:59:25 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ static int	init_data(t_data *dt, int n_philo, int time_to_die)
 			* sizeof(pthread_mutex_t));
 	dt->routine = (pthread_t *)malloc(dt->n_philo * sizeof(pthread_t));
 	dt->philo = (t_philo *)malloc(dt->n_philo * sizeof(t_philo));
+	dt->last = (long int *)malloc(dt->n_philo * sizeof(long int));
+	dt->notepme = (int *)malloc(dt->n_philo * sizeof(int));
 	if (!(dt->fork && dt->routine && dt->philo && dt->mutex_philo_att))
 	{
 		free_data(dt);
