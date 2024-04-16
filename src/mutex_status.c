@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 10:54:59 by math              #+#    #+#             */
-/*   Updated: 2024/04/16 15:04:03 by math             ###   ########.fr       */
+/*   Updated: 2024/04/16 15:24:21 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,3 @@ void	add_status(t_philo *self, int val)
 	*self->status += val;
 	pthread_mutex_unlock(self->mutex_status);
 }
-~
