@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/04/16 14:45:24 by math             ###   ########.fr       */
+/*   Updated: 2024/04/16 14:57:52 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int any_need_eat(int *arr, int size)
 	i = -1;
 	while (++i < size)
 	{
-		if (arr[i] >= 1)
+		if (arr[i] != 0)
 			return (1);
 	}
 	return (0);
@@ -31,10 +31,12 @@ static int	is_dead(t_data *dt, long int *last, int *notepme, int i)
 
 	if (notepme[i] == 0)
 		return (0);
+	if (((get_time() - *last) <= dt->time_to_die))
+		return (0);
 	get_both(&dt->philo[i], last, &temp_notepme);
 	if (temp_notepme == 0)
-		notepme[i] = temp_notepme;
-	if (((get_time() - *last) > dt->time_to_die))
+		notepme[i] = 0;
+	if (((get_time() - *last) > dt->time_to_die) && notepme[i] != 0)
 	{
 		set_status(&dt->philo[i], -1);
 		printf("%ld\t%d is dead\n", get_time() - dt->time_zero, i + 1);
