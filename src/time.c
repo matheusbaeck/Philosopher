@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:12:41 by math42            #+#    #+#             */
-/*   Updated: 2024/04/13 15:11:28 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/16 02:25:49 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	sleep_ms(int mseconds)
 
 	time = get_time();
 	while (get_time() - time < mseconds)
-		;
+		usleep(100);
 	return (0);
 }
 

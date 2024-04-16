@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bonus.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/13 15:02:44 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/16 02:29:02 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-// #define	T_LOCK 50;
-// #define T_UNLOCK 10;
-
 enum			e_action
 {
 	THINK = 42,
@@ -34,12 +31,6 @@ enum			e_action
 	FORK_TWO = 22,
 	EAT = 21,
 	SLEEP = 84,
-};
-
-enum			e_status
-{
-	DEAD = -42,
-	FINISH = 420,
 };
 
 typedef struct s_philo

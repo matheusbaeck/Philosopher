@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:00:26 by mamagalh@st       #+#    #+#             */
-/*   Updated: 2024/04/10 20:01:03 by math             ###   ########.fr       */
+/*   Updated: 2024/04/16 01:18:55 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ long int			get_last_meal(t_philo *self);
 int					set_last_meal(t_philo *self, long int val);
 int					get_notepme(t_philo *self);
 int					add_notepme(t_philo *self, int val);
+void				get_both(t_philo *self, long int *last_meal, int *notepme);
 //MUTEX_STATUS
 int					print_safe(char *str, t_philo *self);
 int					get_status(t_philo *self);

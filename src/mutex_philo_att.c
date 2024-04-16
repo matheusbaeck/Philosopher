@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:37:55 by math              #+#    #+#             */
-/*   Updated: 2024/04/14 12:27:18 by math             ###   ########.fr       */
+/*   Updated: 2024/04/16 01:18:48 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,12 @@ int	add_notepme(t_philo *self, int val)
 	ret_val = self->notepme;
 	pthread_mutex_unlock(self->mutex_philo_att);
 	return (ret_val);
+}
+
+void	get_both(t_philo *self, long int *last_meal, int *notepme)
+{
+	pthread_mutex_lock(self->mutex_philo_att);
+	*last_meal = self->last_meal;
+	*notepme = self->notepme;
+	pthread_mutex_unlock(self->mutex_philo_att);
 }

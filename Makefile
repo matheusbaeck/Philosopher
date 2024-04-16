@@ -6,12 +6,12 @@
 #    By: math <math@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/10 20:08:30 by math              #+#    #+#              #
-#    Updated: 2024/04/12 11:21:02 by math             ###   ########.fr        #
+#    Updated: 2024/04/16 02:10:34 by math             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I. -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -I. #-g3 -fsanitize=address
 #CFLAGS = -Wall -Wextra -Werror -I. -g3 -fsanitize=thread
 
 SRC_DIR = src
