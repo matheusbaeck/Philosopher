@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:45:26 by math42            #+#    #+#             */
-/*   Updated: 2024/04/14 12:27:31 by math             ###   ########.fr       */
+/*   Updated: 2024/04/16 15:03:42 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	lock_fork_one(t_philo *ph)
 int	lock_fork_two(t_philo *ph)
 {
 	int	ret;
+
 	ph->last_act = FORK_TWO;
 	pthread_mutex_lock(ph->fork[1]);
 	ret = print_safe("%ld\t\t%d has taken a fork\n", ph);
