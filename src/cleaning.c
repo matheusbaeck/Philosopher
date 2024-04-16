@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaning.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:49:25 by math              #+#    #+#             */
-/*   Updated: 2024/04/14 12:43:02 by math             ###   ########.fr       */
+/*   Updated: 2024/04/16 16:25:39 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,20 @@ void	destroy_mutex(t_data *dt)
 	pthread_mutex_destroy(&dt->mutex_status);
 }
 
+void	free_data_aux(t_data *dt)
+{
+	if (dt->last)
+	{
+		free(dt->last);
+		dt->last = NULL;
+	}
+	if (dt->notepme)
+	{
+		free(dt->notepme);
+		dt->last = NULL;
+	}
+}
+
 void	free_data(t_data *dt)
 {
 	if (dt->fork)
@@ -40,7 +54,7 @@ void	free_data(t_data *dt)
 	if (dt->mutex_philo_att)
 	{
 		free(dt->mutex_philo_att);
-		dt->fork = NULL;
+		dt->mutex_philo_att = NULL;
 	}
 	if (dt->routine)
 	{
@@ -52,4 +66,5 @@ void	free_data(t_data *dt)
 		free(dt->philo);
 		dt->philo = NULL;
 	}
+	free_data_aux(dt);
 }

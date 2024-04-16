@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: math <math@student.42.fr>                  +#+  +:+       +#+         #
+#    By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/10 20:08:30 by math              #+#    #+#              #
-#    Updated: 2024/04/16 02:10:34 by math             ###   ########.fr        #
+#    Updated: 2024/04/16 16:18:31 by mamagalh@st      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I. #-g3 -fsanitize=address
-#CFLAGS = -Wall -Wextra -Werror -I. -g3 -fsanitize=thread
+#CFLAGS = -Wall -Wextra -Werror -I. -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -I. #-g3 -fsanitize=thread
 
 SRC_DIR = src
 SRC_BONUS_DIR = bonus

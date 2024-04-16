@@ -6,7 +6,7 @@
 /*   By: mamagalh@student.42madrid.com <mamagalh    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:08:00 by math42            #+#    #+#             */
-/*   Updated: 2024/04/16 15:59:25 by mamagalh@st      ###   ########.fr       */
+/*   Updated: 2024/04/16 16:26:32 by mamagalh@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ static int	init_data(t_data *dt, int n_philo, int time_to_die)
 	dt->philo = (t_philo *)malloc(dt->n_philo * sizeof(t_philo));
 	dt->last = (long int *)malloc(dt->n_philo * sizeof(long int));
 	dt->notepme = (int *)malloc(dt->n_philo * sizeof(int));
-	if (!(dt->fork && dt->routine && dt->philo && dt->mutex_philo_att))
+	if (!(dt->fork && dt->routine && dt->philo && dt->mutex_philo_att
+			&& dt->last && dt->notepme))
 	{
 		free_data(dt);
 		printf("Philosopher: memory allocation error!\n");
